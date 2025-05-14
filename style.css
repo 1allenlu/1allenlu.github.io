@@ -1,0 +1,512 @@
+/* General */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #121212;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+p {
+    color:#717171;
+}
+
+/* Transition */
+
+a,
+.btn {
+    transition: all 300ms ease;
+}
+
+/* Desktop Nav */
+
+nav,
+.nav-links {
+    /* display on the same line */
+    display: flex;
+    background-color: #121212;
+}
+
+nav {
+    /* seperate two elements and center */
+    justify-content: space-around;
+    align-items: center;
+    height: 17vh;
+    
+}
+
+.nav-links {
+    gap: 2rem;
+    /* remove dots */
+    list-style: none;
+    font-size: 1.5rem;
+    color: #8b8b8b;
+}
+
+a, h3, h4, h5 {
+    color: #8b8b8b;
+    /* Remove underline */
+    text-decoration: none;
+    text-decoration-color: white;
+}
+
+a:hover {
+    color: grey;
+    text-decoration: underline;
+    text-underline-offset: 1rem;
+    text-decoration-color: rgb(181, 181, 181);
+}
+
+.logo {
+    font-size: 2rem;
+    color: #8b8b8b;
+}
+
+.logo:hover {
+    /* Making the Cursor display as a mouse */
+    cursor: default;
+}
+
+/* Hamburger Menu */
+
+#hamburger-nav {
+    /* Initially not displayed */
+    display: none;
+    color: #3f3f3f;
+}
+
+.hamburger-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.hamburger-icon {
+    display: flex;
+    flex-direction: column;
+    /* Space out the content */
+    justify-content: space-between;
+    height: 24px;
+    width: 30px;
+    cursor: pointer;
+}
+
+.hamburger-icon span {
+    width: 100%;
+    height: 2px;
+    background-color: black;
+    /* Slow start and a slow end */
+    transition: all 0.3s ease-in-out;
+}
+
+.menu-links {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: fit-content;
+    background-color: rgb(255, 255, 255);
+    /* Making the box height 0 */
+    max-height: 0;
+    /* Hide anything out of the box */
+    overflow: hidden;
+    /* Slow start and a slow end */
+    transition: all 0.3s ease-in-out;
+}
+
+.menu-links a {
+    display: block;
+    /* Leaving space around 10px */
+    padding: 10px;
+    text-align: left;
+    font-size: 1.5rem;
+    color: black;
+    text-decoration: none;
+    /* Slow start and a slow end */
+    transition: all 0.3s ease-in-out;
+}
+
+.menu-links li {
+    list-style: none;
+}
+
+.menu-links.open {
+    /* Change this to 300px to reveal it */
+    max-height: 300px;
+}
+
+.hamburger-icon.open span:first-child {
+    /* Transform the hamburger icon */
+    transform: rotate(45deg) translate(10px, 5px);
+}
+
+.hamburger-icon.open span:nth-child(2) {
+    /* Transform the hamburger icon */
+    opacity: 0;
+}
+
+.hamburger-icon.open span:last-child {
+    /* Transform the hamburger icon */
+    transform: rotate(-45deg) translate(10px, -5px);
+}
+
+/* Sections */
+
+section {
+    padding-top: 4vh;
+    height: 96vh;
+    margin: 0 10rem;
+    background-color: #121212;
+    box-sizing: border-box;
+    min-height: fit-content;
+}
+
+.section-container {
+    display: flex;
+}
+
+/* Profile Section */
+
+#profile {
+    display: flex;
+    justify-content: center;
+    gap: 5rem;
+    height: 80vh;
+}
+
+.background {
+    background-repeat:no-repeat;
+    background-position: center;
+    background-attachment: scroll;
+    background-size:100%;
+    background-color: #121212;
+}
+
+.section__pic-container,
+.about-pic {
+    display: flex;
+    height: 400px;
+    width: 400px;
+    margin: auto 0;
+    /*Hover effect time*/
+    transition: 0.5s ease-in-out;
+}
+
+.section__text {
+    align-self: center;
+    text-align: center;
+}
+
+.section__text p {
+    font-weight: 600;
+}
+
+.section__text__p1 {
+    text-align: center;
+    color: #717171;
+}
+
+.title {
+    font-size: 3rem;
+    text-align: center;
+    color: #8b8b8b;
+}
+
+#socials-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    gap: 1rem;
+}
+
+/* Icons */
+
+.icon {
+    cursor: pointer;
+    height: 2rem;
+}
+
+.edu-icon {
+    height: 2rem;
+}
+
+/* Buttons */
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    /* Gap between buttons */
+    gap: 1rem;
+}
+
+.btn {
+    /* Bold text */
+    font-weight: 600;
+    transition: all 300ms ease;
+    /* Making buttion taller */
+    padding: 1rem;
+    /* Make button wider */
+    width: 8rem;
+    /* Round the botton */
+    border-radius: 2rem;
+}
+
+.btn-color-1,
+.btn-color-2 {
+    border: rgb(53, 53, 53) 0.1rem solid;
+}
+
+/* Hover effect on buttons */
+.btn-color-1:hover,
+.btn-color-2:hover {
+    cursor: pointer;
+}
+
+.btn-color-1,
+.btn-color-2 {
+    background: #3f3f3f;
+    color: white;
+}
+
+.btn-color-1:hover,
+.btn-color-2:hover {
+    background: black;
+    border: white 0.1rem solid;
+}
+
+/* About Section */
+
+#about {
+    position: relative;
+    background-color: #121212;
+}
+
+.about-containers {
+    gap: 2rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+
+.about-details-container {
+    justify-content: center;
+    flex-direction: column;
+}
+
+.about-containers,
+.about-details-container {
+    display: flex;
+}
+
+.about-pic {
+    border-radius: 2rem;
+    transition: 0.15s ease-out;
+}
+
+.about-pic:hover{
+    transform:scale(1.02);
+    opacity: 0.97;
+    cursor: pointer;
+}
+
+.arrow {
+    position: absolute;
+    right: -5rem;
+    bottom: 2.5rem;
+}
+
+.details-container {
+    padding: 1.5rem;
+    /* Fill the line */
+    flex: 1;
+    background-color: #282828;
+    border-radius: 2rem;
+    border: rgb(53, 53, 53) 0.1rem solid;
+    border-color: rgb(163, 163, 163);
+    text-align: center;
+}
+
+.section-container {
+    gap: 4rem;
+    height: 80%
+}
+
+.section__pic-container {
+    border-radius: 2rem;
+    height: 400px;
+    width: 400px;
+    margin: auto 0;
+}
+
+.about-text-container p{
+    font-size: 0.9rem;
+    font-weight: 430;
+}
+
+/* Experience Section */
+
+#experience {
+    position: relative;
+}
+
+.experience-sub-title {
+    color: rgb(85, 85, 85);
+    font-weight: 600;
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+}
+
+.experience-details-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.article-container {
+    display: flex;
+    text-align: initial;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 2.5rem;
+    justify-content: space-around;
+}
+
+article {
+    display: flex;
+    width: 10rem;
+    text-align: left;
+    gap: 0.5rem;
+}
+
+article .icon {
+    cursor: default;
+}
+
+/* switch from flex-wrap to a three-column grid */
+.skills-container .article-container {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+gap: 2rem;
+text-align: left;               /* override center from details-container */
+justify-items: start;           /* left-align each cell */
+}
+
+/* let each mini-panel size to its content rather than a fixed width */
+.skills-container article {
+width: auto;                     /* override the 10rem in your global article rule */
+flex-direction: column;         /* keep title & paragraph stacking */
+gap: 0.5rem;
+}
+
+/* Project Section */
+
+#projects {
+    position: relative;
+}
+
+.color-container {
+    border-color: rgb(163, 163, 163);
+    background: #282828;
+}
+
+.project-img {
+    border-radius: 2rem;
+    width: 90%;
+    height: 90%;
+    border:rgb(193, 193, 193) 0.1rem solid;
+}
+
+.project-title {
+    margin: 1rem;
+    color: #717171;
+}
+
+.project-btn {
+    color: white;
+    border-color: rgb(163, 163, 163);
+}
+
+/*In Progress Button*/
+.in-progress-btn{
+    background: rgb(53, 53, 53);
+    color: white;
+}
+
+.experience-details-container .about-containers {
+    display: flex;
+    gap: 2rem;             
+    align-items: stretch;     
+}
+
+.experience-details-container .details-container {
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+flex: 1 1 0;               
+}
+
+.experience-details-container .details-container .article-container {
+flex: 1 0 auto;             
+}
+
+.experience-details-container .btn-container {
+text-align: center;
+margin-top: 1rem;           
+}
+
+/* Contact */
+
+#contact {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 70vh;
+}
+
+.contact-info-upper-container {
+    display: flex;
+    justify-content: center;
+    border-radius: 2rem;
+    border: rgb(53, 53, 53) 0.1rem solid;
+    border-color: rgb(163, 163, 163);
+    background: (250, 250, 250);
+    margin: 2rem auto;
+    padding: 0.5rem;
+}
+
+.contact-info-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1rem;
+}
+
+.contact-info-container p {
+    font-size: larger;
+}
+
+.contact-icon {
+    cursor: default;
+}
+
+.email-icon {
+    height: 2.5rem;
+}
+
+/* Footer Section*/
+
+footer {
+    height: 26vh;
+    margin: 0 1rem;
+}
+
+footer p{
+    text-align: center;
+}
