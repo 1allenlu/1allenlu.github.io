@@ -4,14 +4,16 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>My Portfolio</title>
+   <title>Allen Lu Portfolio</title>
+   <link rel="icon" type="image/png" href="assets/favicon.png">
+
    <link rel="stylesheet" href="style.css">
    <link rel="stylesheet" href="mediaqueries.css">
 </head>
 
 <body>
    <nav id="desktop-nav">
-      <div class="logo">Alexander Wu</div>
+      <div class="logo">Allen Lu</div>
       <div>
          <ul class="nav-links">
             <li><a href="#about">About</a></li>
@@ -22,7 +24,7 @@
       </div>
    </nav>
    <nav id="hamburger-nav">
-      <div class="logo">Alexander Wu</div>
+      <div class="logo">Allen Lu</div>
       <div class="hamburger-menu">
          <div class="hamburger-icon" onclick="toggleMenu()">
             <span></span>
@@ -40,11 +42,11 @@
    <div class="background">
    <section id="profile">
          <div class="section__pic-container">
-            <img src="images/profile-pic.png" alt="Alexander Wu profile picture">
+            <img src="assets/profile-pic.png" alt="Alexander Wu profile picture">
          </div>
          <div class="section__text">
             <p class="section__text__p1">Hello, I'm</p>
-            <h1 class="title">Alexander Wu</h1>
+            <h1 class="title">Allen Lu </h1>
             <div class="btn-container">
                <button class="btn btn-color-2" onclick="window.open('./info/Resume.pdf')">
                   Download Resume
@@ -54,9 +56,9 @@
                </button>
             </div>
             <div id="socials-container">
-               <img src="./images/linkedin.png" alt="My LinkedIn Profile" class="icon"
+               <img src="./assets/linkedin.png" alt="My LinkedIn Profile" class="icon"
                   onclick="window.open('https://www.linkedin.com/in/alexander-wu-4b0239188')">
-               <img src="./images/github.png" alt="My Github Profile" class="icon"
+               <img src="./assets/github.png" alt="My Github Profile" class="icon"
                   onclick="window.open('https://github.com/awu0518')">
             </div>
          </div>
@@ -67,31 +69,31 @@
       <h1 class="title">About Me</h1>
       <div class="section-container">
          <div class="section__pic-container">
-            <img src="./images/about-pic.png" alt="Alexander Wu" class="about-pic">
+            <img src="./assets/about-pic.png" alt="Alexander Wu" class="about-pic">
             </a>
          </div>
          <div class="about-details-container">
             <div class="about-containers">
                <div class="details-container">
-                  <img src="./images/education.png" alt="Education icon" class="edu-icon">
+                  <img src="./assets/education.png" alt="Education icon" class="edu-icon">
                   <h3>Education</h3>
                   <h5>New York University | Tandon School of Engineering</h5>
-                  <p>Majoring in B.S. Mathematics and Computer Science with Minor in Cybersecurity</p>
+                  <p>Majoring in B.S. Mathematics and Computer Science</p>
                </div>
             </div>
             <div class="about-text-container text-container">
                <p>
-                  Hi! I'm Alexander Wu, currrently pursuing a double major in Mathematics and Computer 
-                  Science along with a minor in Cybersecurity. I am currently the Head Teaching Assistant for 
-                  an undergraduate course in Object Oriented Programming in C++, leading a team of several TAs 
-                  while teaching and grading for the course. </form> <br><br>
-                  Outside my studies, you can find me as a violinist at the New York Session Symphony as a 
-                  violinist during the school year and at Litha Symphony Orchestra during the summer! 
+                  Hi! I’m Allen Lu, a double major in Mathematics and Computer Science at NYU Tandon School of Engineering. 
+                  I’m currently a Student Product Analyst at NYU IT, Treasurer at NYU Theta Tau (a professional engineering fraternity), 
+                  and Secretary/Treasurer of the NYU Applied Math Club. I’m passionate about software engineering—especially back-end development 
+                  and machine learning—and I’m actively looking for new grad SWE/MLE/SDE roles.</form> <br><br>
+                  Feel free to reach out if you wanna chat: allen930526@gmail.comOutside of school and work, I’m a huge Golden State Warriors fan, someone who enjoys lifting at the gym, and always down to try new restaurants around NYC.
+
                </p>
             </div>
          </div>
       </div>
-      <img src="./images/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='./#experience'">
+      <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='./#experience'">
    </section>
    <section id="experience">
       <p class="section__text__p1">Explore My</p>
@@ -103,32 +105,30 @@
                   <div class="article-container">
                      <article>
                         <h3>Programming</h3>
-                        <p>Python, C/C++, Java, Kotlin, JavaScript, SQL</p>
+                        <p>Python, C/C++, SQL, R</p>
                      </article>
                      <article>
                         <h3>Web Development</h3>
-                        <p>HTML, CSS, Flask</p>
+                        <p>HTML, CSS, Flask, Bootstrap</p>
                      </article>
                      <article>
                         <h3>Tools &amp; Frameworks</h3>
-                        <p>PyTorch, React, AWS, MySQL, Pinecone</p>
+                        <p>PyTorch, MySQL, NumPy, Git, LaTeX</p>
                      </article>
                   </div>
             </div>
             <div class="details-container">
                <h2 class="experience-sub-title">Industry</h2>
-               <h3> Amazon </h3>
-               <p> Incoming Summer 2025 SDE Intern </p>
+               <h3> Athleo.ai </h3>
+               <p> Software Development Engineer Intern </p>
                <br>
-               <h3> PNC Financial Services </h3>
-               <p> Software Engineer Intern </p>
+               <h3> New York University IT </h3>
+               <p> Student Product Support Analyst </p>
                <br>
-               <h3> New York University </h3>
-               <p> Computer Science Head Teaching Assistant </p>
             </div>
          </div>
       </div>
-      <img src="./images/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='./#projects'">
+      <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='./#projects'">
    </section>
    <section id="projects">
       <p class="section__text__p1">Browse My Recent</p>
@@ -137,11 +137,11 @@
          <div class="about-containers">
             <div class="details-container color-container">
                <div class="article-container">
-                  <img src="./images/project-stock.jpg" alt="Project 2" class="project-img" />
+                  <img src="./assets/project-stock.jpg" alt="Project 2" class="project-img" />
                </div>
-               <h2 class="experience-sub-title project-title">HackNYU 2025: Stock Educator</h2>
+               <h2 class="experience-sub-title project-title">Loan Default Prediction System</h2>
                <div class="btn-container">
-                  <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/awu0518/hacknyu2025')">
+                  <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/1allenlu/Loan-Default-Prediction')">
                      GitHub
                   </button>
                </div>
@@ -149,11 +149,23 @@
 
             <div class="details-container color-container">
                <div class="article-container">
-                  <img src="./images/project-airticket.png" alt="Project 1" class="project-img" />
+                  <img src="./assets/project-airticket.png" alt="Project 1" class="project-img" />
                </div>
-               <h2 class="experience-sub-title project-title">Airticket Reservation System</h2>
+               <h2 class="experience-sub-title project-title">Online Airline Ticket Reservation System</h2>
                <div class="btn-container">
-                  <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/awu0518/Airticket-Reservation-System')">
+                  <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/1allenlu/Online-Airline-Ticket-Reservation-System')">
+                     GitHub
+                  </button>
+               </div>
+            </div>
+
+            <div class="details-container color-container">
+               <div class="article-container">
+                  <img src="./assets/project-airticket.png" alt="Project 1" class="project-img" />
+               </div>
+               <h2 class="experience-sub-title project-title"> Tic Tac Toe game</h2>
+               <div class="btn-container">
+                  <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/1allenlu/Tictactoe-Game')">
                      GitHub
                   </button>
                </div>
@@ -165,24 +177,26 @@
                <h2 class="experience-sub-title project-title">Coming Soon</h2>
              
                <div class="btn-container">
-                  <button class="btn btn-color-2 in-progress-btn">In Progress</button>
+                  <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/1allenlu')">
+                     GitHub
+                  </button>
                </div>
              </div>
          </div>
       </div>
-      <img src="./images/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='./#contact'" />
+      <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='./#contact'" />
    </section>
    <section id="contact">
       <p class="section__text__p1">Get in Touch</p>
       <h1 class="title">Contact Me</h1>
       <div class="contact-info-upper-container">
          <div class="contact-info-container">
-            <img src="./images/email.png" alt="Email icon" class="icon contact-icon email-icon" />
-            <p><a href="mailto:azw7225@nyu.edu">azw7225@nyu.edu</a></p>
+            <img src="./assets/email.png" alt="Email icon" class="icon contact-icon email-icon" />
+            <p><a href="mailto:allen930526@gmail.com">allen930526@gmail.com</a></p>
          </div>
          <div class="contact-info-container">
-            <img src="./images/linkedin.png" alt="LinkedIn icon" class="icon contact-icon" />
-            <p><a href="https://www.linkedin.com/in/alexander-wu-4b0239188" target="_blank">LinkedIn</a></p>
+            <img src="./assets/linkedin.png" alt="LinkedIn icon" class="icon contact-icon" />
+            <p><a href="https://www.linkedin.com/in/allen-lu526/" target="_blank">LinkedIn</a></p>
          </div>
       </div>
    </section>
