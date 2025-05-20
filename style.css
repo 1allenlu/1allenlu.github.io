@@ -16,7 +16,8 @@ body {
     font-family: 'Space Grotesk', sans-serif;
 
 
-    background-color: #121212;
+    /* background-color: #121212; */
+     background-color: #1C1C1C;
 }
 
 html {
@@ -40,7 +41,8 @@ nav,
 .nav-links {
     /* display on the same line */
     display: flex;
-    background-color: #121212;
+    /* background-color: #121212; */
+    background-color: #1C1C1C;
 }
 
 nav {
@@ -170,7 +172,8 @@ section {
     padding-top: 4vh;
     height: 96vh;
     margin: 0 10rem;
-    background-color: #121212;
+    /* background-color: #121212; */
+    background-color: #1C1C1C;
     box-sizing: border-box;
     min-height: fit-content;
 }
@@ -193,7 +196,8 @@ section {
     background-position: center;
     background-attachment: scroll;
     background-size:100%;
-    background-color: #121212;
+    /* background-color: #121212; */
+    background-color: #1C1C1C;
 }
 
 .section__pic-container,
@@ -292,7 +296,8 @@ section {
 
 #about {
     position: relative;
-    background-color: #121212;
+    /* background-color: #121212; */
+    background-color: #1C1C1C;
 }
 
 .about-containers {
