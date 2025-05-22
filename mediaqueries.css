@@ -49,20 +49,16 @@
   }
   
   @media screen and (max-width: 600px) {
-    #contact,
-    footer {
+    #contact {
       height: 40vh;
     }
+    
     #profile {
       height: 83vh;
       margin-bottom: 0;
     }
     article {
       font-size: 1rem;
-    }
-    footer nav {
-      height: fit-content;
-      margin-bottom: 2rem;
     }
     .about-containers,
     .contact-info-upper-container,
@@ -106,3 +102,46 @@
       text-align: justify;
     }
   }
+
+/* Photography Portfolio Media Queries */
+@media screen and (max-width: 1024px) {
+    #gallery {
+        padding: 2rem 3rem;
+        margin-bottom: 3rem;
+    }
+    
+    .gallery-container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .gallery-item {
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #gallery {
+        padding: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .gallery-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .gallery-item {
+        height: auto;
+    }
+    
+    #photography-intro {
+        height: auto;
+        padding: 3rem 1rem;
+    }
+    
+    .photography-intro-text {
+        margin: 1.5rem 0;
+        font-size: 1rem;
+    }
+}
