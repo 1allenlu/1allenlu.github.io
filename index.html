@@ -5,221 +5,357 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Allen Lu Portfolio</title>
-   <link rel="icon" type="image/png" href="assets/homepage/favicon.png">
+   <link rel="icon" type="image/png" href="assets/homepage/favicon.jpg">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <!-- <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"> -->
 
-   <link rel="stylesheet" href="style.css">
-   <link rel="stylesheet" href="mediaqueries.css">
+      <link
+         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+         rel="stylesheet">
+   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-   <nav id="desktop-nav">
-      <div class="logo">Allen Lu</div>
-      <div>
+   <header>
+      <nav class="container">
+         <!-- <div class="logo">Allen Lu</div> -->
+         <a href="#" class="logo">Allen Lu</a>
          <ul class="nav-links">
             <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
             <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
             <li><a href="#projects">Projects</a></li>
-            <li><a href="portfolio.html">Photography</a></li>
             <li><a href="#contact">Contact</a></li>
          </ul>
-      </div>
-   </nav>
-   <nav id="hamburger-nav">
-      <div class="logo">Allen Lu</div>
-      <div class="hamburger-menu">
-         <div class="hamburger-icon" onclick="toggleMenu()">
+         <div class="mobile-menu-toggle">
             <span></span>
             <span></span>
             <span></span>
-         </div>
-         <ul class="menu-links">
-            <li><a href="#about" onclick="toggleMenu()">About</a></li>
-            <li><a href="#experience" onclick="toggleMenu()">Experience</a></li>
-            <li><a href="#projects" onclick="toggleMenu()">Projects</a></li>
-            <li><a href="portfolio.html" onclick="toggleMenu()">Photography</a></li>
-            <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
-            <ul>
-      </div>
-   </nav>
-   <div class="background">
-   <section id="profile">
-         <div class="section__pic-container">
-            <img src="assets/homepage/profile-pic.jpg" alt="Allen Lu profile picture">
-         </div>
-         <div class="section__text">
-            <p class="section__text__p1">Hello, I'm</p>
-            <h1 class="title">Allen Lu </h1>
-            <div class="btn-container">
-               <button class="btn btn-color-2" onclick="window.open('./info/Resume.pdf')">
-                  Download Resume
-               </button>
-               <button class="btn btn-color-1" onclick="location.href='./#contact'">
-                  Contact Info
-               </button>
-            </div>
-            <div id="socials-container">
-               <img src="./assets/homepage/linkedin.png" alt="My LinkedIn Profile" class="icon"
-                  onclick="window.open('https://www.linkedin.com/in/allen-lu526/')">
-               <img src="./assets/homepage/github.png" alt="My Github Profile" class="icon"
-                  onclick="window.open('https://github.com/1allenlu')">
-            </div>
-         </div>
-   </section>
-   </div>
-   <section id="about">
-      <p class="section__text__p1">Get To Know More</p>
-      <h1 class="title">About Me</h1>
-      <div class="section-container">
-         <div class="section__pic-container">
-            <img src="./assets/homepage/about-pic.jpg" alt="Allen Lu" class="about-pic">
-            </a>
-         </div>
-         <div class="about-details-container">
-            <div class="about-containers">
-               <div class="details-container">
-                  <img src="./assets/homepage/education.png" alt="Education icon" class="edu-icon">
-                  <h3>Education</h3>
-                  <h5>New York University | Tandon School of Engineering</h5>
-                  <p>Majoring in B.S. Mathematics and Computer Science</p>
-               </div>
-            </div>
-            <div class="about-text-container text-container">
-               <p>
-                  Hi! I’m Allen Lu, a double major in Mathematics and Computer Science at NYU Tandon School of Engineering. 
-                  I’m currently a Student Product Analyst at NYU IT, Treasurer at NYU Theta Tau (a professional engineering fraternity), 
-                  and Secretary/Treasurer of the NYU Applied Math Club. I’m passionate about software engineering—especially back-end development 
-                  and machine learning. I’m actively looking for new grad MLE/SWE/SDE roles.</form> <br><br>
-                  Beyond school and work, I’m a Golden State Warriors fan (GO WARRIORS!), into hitting the gym for some lifting, and always up for checking out new eats around NYC. 
-                  Oh, and I’m super into fashion and K-pop too!
-              <br><br>
-                   Feel free to reach out if you want to chat: allen930526@gmail.com 
-               </p>
-            </div>
-         </div>
-      </div>
-      <img src="./assets/homepage/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='./#experience'">
-   </section>
-   <section id="experience">
-      <p class="section__text__p1">Explore My</p>
-      <h1 class="title">Experience</h1>
-      <div class="experience-details-container">
-         <div class="about-containers">
-            <div class="details-container skills-container">
-               <h2 class="experience-sub-title">Skills</h2>
-                  <div class="article-container">
-                     <article>
-                        <h3>Programming</h3>
-                        <p>Python, C/C++, SQL, R</p>
-                     </article>
-                     <article>
-                        <h3>Web Development</h3>
-                        <p>HTML, CSS, Flask, Bootstrap</p>
-                     </article>
-                     <article>
-                        <h3>Tools &amp; Frameworks</h3>
-                        <p>PyTorch, MySQL, NumPy, Git, LaTeX</p>
-                     </article>
-                  </div>
-            </div>
-            <div class="details-container">
-               <h2 class="experience-sub-title">Industry</h2>
-               <h3> Athleo.ai </h3>
-               <p> Software Development Engineer Intern </p>
-               <br>
-               <h3> New York University IT </h3>
-               <p> Student Product Support Analyst </p>
-               <br>
-            </div>
-         </div>
-      </div>
-      <img src="./assets/homepage/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='./#projects'">
-   </section>
-   <section id="projects">
-      <p class="section__text__p1">Browse My Recent</p>
-      <h1 class="title">Works</h1>
-      <div class="experience-details-container">
-         <div class="about-containers">
-            <div class="details-container color-container">
-               <div class="article-container">
-                  <img src="./assets/homepage/project-loan.png" alt="Project 2" class="project-img" />
-               </div>
-               <h2 class="experience-sub-title project-title">Loan Default Prediction System</h2>
-               <div class="btn-container">
-                  <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/1allenlu/Loan-Default-Prediction')">
-                     GitHub
-                  </button>
-               </div>
-            </div>
-
-            <div class="details-container color-container">
-               <div class="article-container">
-                  <img src="./assets/homepage/project-airticket.png" alt="Project 1" class="project-img" />
-               </div>
-               <h2 class="experience-sub-title project-title"> Airline Ticket Booking System</h2>
-               <div class="btn-container">
-                  <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/1allenlu/Online-Airline-Ticket-Reservation-System')">
-                     GitHub
-                  </button>
-               </div>
-            </div>
-
-            <div class="details-container color-container">
-               <div class="article-container">
-                  <img src="./assets/homepage/project-tictactoe.png" alt="Project 1" class="project-img" />
-               </div>
-               <h2 class="experience-sub-title project-title"> Tic Tac Toe game</h2>
-               <div class="btn-container">
-                  <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/1allenlu/Tictactoe-Game')">
-                     GitHub
-                  </button>
-               </div>
-            </div>
-
-            <div class="details-container color-container">
-               <div class="article-container">
-                  <img src="./assets/homepage/project-comingsoon.png" alt="Project 1" class="project-img" />
-               </div>
-             
-               <h2 class="experience-sub-title project-title">Coming Soon</h2>
-             
-               <div class="btn-container">
-                  <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/1allenlu')">
-                     GitHub
-                  </button>
-               </div>
-             </div>
-         </div>
-      </div>
-      <img src="./assets/homepage/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='./#contact'" />
-   </section>
-   <section id="contact">
-      <p class="section__text__p1">Get in Touch</p>
-      <h1 class="title">Contact Me</h1>
-      <div class="contact-info-upper-container">
-         <div class="contact-info-container">
-            <img src="./assets/homepage/email.png" alt="Email icon" class="icon contact-icon email-icon" />
-            <p><a href="mailto:allen930526@gmail.com">allen930526@gmail.com</a></p>
-         </div>
-         <div class="contact-info-container">
-            <img src="./assets/homepage/linkedin.png" alt="LinkedIn icon" class="icon contact-icon" />
-            <p><a href="https://www.linkedin.com/in/allen-lu526/" target="_blank">LinkedIn</a></p>
-         </div>
-      </div>
-   </section>
-   <footer>
-      <nav>
-         <div class="nav-links-container">
-            <ul class="nav-links">
-               <li><a href="#about">About</a></li>
-               <li><a href="#experience">Experience</a></li>
-               <li><a href="#projects">Projects</a></li>
-               <li><a href="portfolio.html">Photography</a></li>
-
-               <li><a href="#contact">Contact</a></li>
-            </ul>
          </div>
       </nav>
-   </footer>
+   </header>
+
+   <main>
+      <!-- Hero Section -->
+      <section class="hero">
+         <div class="container">
+            <h1>Allen Lu</h1>
+            <div class="subtitle">An Aspiring Software Engineer & Machine Learning Engineer</div>
+            <p>Mathematics and Computer Science student at NYU Tandon passionate about backend development, machine
+               learning, and building impactful software solutions. Currently seeking 2026 new grad SWE/MLE/SDE/DE
+               opportunities.</p>
+
+            <div class="cta-buttons">
+               <a href="#contact" class="btn btn-primary">Get In Touch</a>
+               <!-- <a href="info/resume.pdf" class="btn btn-secondary" download>Download Resume</a> -->
+               <a href="info/resume.pdf" class="btn btn-secondary" target="_blank">Download Resume</a>
+               <a href="#projects" class="btn btn-tertiary">View Projects</a>
+               <a href="https://github.com/1allenlu" class="btn btn-quaternary" target="blank">View GitHub</a>     </div>
+            <!-- <div class="cta-buttons">
+               <a href="#contact" class="btn btn-primary">Get In Touch</a>
+               <a href="#projects" class="btn btn-secondary">View Projects</a> -->
+            </div>
+         </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about">
+         <div class="container">
+            <div class="section-header">
+               <h2>About Me</h2>
+            </div>
+            <div class="about-content">
+               <div class="about-image">
+                  <img src="assets/homepage/about-pic.jpg"
+                     id="profile-image">
+               </div>
+               <div class="about-text">
+                  <p>Hey there! I'm a double major in Mathematics and Computer Science at NYU Tandon School of
+                     Engineering, passionate about software engineering—especially backend development and machine
+                     learning.</p>
+
+                  <p>Beyond academics, I serve as a Student Product Analyst at NYU IT and hold leadership roles as
+                     Treasurer of NYU Theta Tau engineering fraternity and Secretary/Treasurer of the Tandon Applied Math Club.</p>
+
+                  <p>When I'm not coding or crunching numbers, you'll find me cheering for the Golden State Warriors (GO
+                     WARRIORS!), hitting the gym, exploring NYC's incredible food scene, staying up
+                     with the latest fashion trends, and vibing with K-pop.</p>
+
+                  <p>I'm actively looking for 2026 new grad MLE/SWE/SDE/DE roles where I can contribute my technical skills and
+                     passion for building meaningful software solutions.</p>
+               </div>         
+            </div>
+         </div>
+      </section>
+
+      <!-- Education Section -->
+      <section id="education">
+         <div class="container">
+             <div class="section-header">
+                 <h2>Education</h2>
+                 <p>My academic background</p>
+             </div>
+             <div class="education-content">
+                 <div class="education-image">
+                     <img src="assets/homepage/profile-pic.jpg" alt="Allen Lu Professional Photo" class="professional-photo">
+                 </div>
+                 <div class="education-item">
+                     <div class="education-degree">B.S. Mathematics and Computer Science</div>
+                     <div class="education-school">NYU Tandon School of Engineering</div>
+                     <div class="education-date">Expected Graduation: 2026</div>
+                     <div class="education-details">
+                         <p>Double major focusing on the intersection of mathematical theory and practical computer science applications. 
+                           Coursework includes Machine Learning, Operating Systems, Design and Analysis of Algorithms, Databases, Computer Architecture, Object
+                           Oriented Programming, Data Structures, Applied Statistics, Math Modeling.</p>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </section>
+
+
+<!--      
+      <section id="education">
+         <div class="container">
+            <div class="section-header">
+               <h2>Education</h2>
+               <p>My academic background</p>
+            </div>
+            <div class="education-item">
+               <div class="education-degree">B.S. Mathematics and Computer Science</div>
+               <div class="education-school">NYU Tandon School of Engineering</div>
+               <div class="education-date">Expected Graduation: 2025</div>
+               <div class="education-details">
+                  <p>Double major focusing on the intersection of mathematical theory and practical computer science
+                     applications. Coursework includes algorithms, data structures, machine learning, statistical
+                     analysis, and software engineering principles.</p>
+               </div>
+            </div>
+         </div>
+      </section> -->
+
+      <!-- Experience Section -->
+      <section id="experience">
+         <div class="container">
+            <div class="section-header">
+               <h2>Professional Experience</h2>
+               <p>My journey in software engineering and technical roles</p>
+            </div>
+            <div class="experience-grid">
+               <div class="experience-item">
+                  <div class="experience-header">
+                     <div>
+                        <div class="experience-title">Student Product Support Analyst</div>
+                        <div class="experience-company">NYU IT</div>
+                     </div>
+                     <div class="experience-date">Oct 2024 - Present</div>
+                  </div>
+                  <div class="experience-description">
+                     - Test and troubleshoot NYU Brightspace updates pre-deployment, ensuring smooth transitions for 80,000+ users.<br>
+                     - Develop training materials and documentation while managing user support and delivering live Brightspace training.
+                  </div>
+               </div>
+
+               <div class="experience-item">
+                  <div class="experience-header">
+                     <div>
+                        <div class="experience-title">Software Development Engineer Intern</div>
+                        <div class="experience-company">Athleo.ai</div>
+                     </div>
+                     <div class="experience-date">Jun 2024 - Aug 2024</div>
+                  </div>
+                  <div class="experience-description">
+                     - Engineered a responsive website using HTML, CSS, and JavaScript, attracting 1,500+ daily views.<br>
+                     - Executed QA testing with software team, resolving 20+ client-reported issues and implementing user-driven improvements
+                     that increased reliability and user satisfaction.<br>
+                     - Produced and optimized technical videos, achieving 30,000+ views and streamlining product onboarding.
+                  </div>
+               </div>
+
+
+
+               <div class="experience-item">
+                  <div class="experience-header">
+                     <div>
+                        <div class="experience-title">Engineering Intern</div>
+                        <div class="experience-company">Hersheen Enterprise</div>
+                     </div>
+                     <div class="experience-date">Jul 2023 - Aug 2023</div>
+                  </div>
+                  <div class="experience-description">
+                     - Redesigned the company's website using HTML and WordPress, increasing daily traffic by 1000+ visitors.<br>
+                     - Modeled 3D carpet designs in Catia for manufacturing and assembled complex structures by integrating multiple parts.
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section id="skills">
+         <div class="container">
+            <div class="section-header">
+               <h2>Technical Skills</h2>
+               <p>Technologies and tools I work with</p>
+            </div>
+            <div class="skills-grid">
+               <div class="skill-category">
+                  <h3>Programming Languages</h3>
+                  <div class="skill-tags">
+                     <span class="skill-tag">Python</span>
+                     <span class="skill-tag">C/C++</span>
+                     <span class="skill-tag">SQL</span>
+                     <span class="skill-tag">R</span>
+                  </div>
+               </div>
+
+               <div class="skill-category">
+                  <h3>Web Technologies</h3>
+                  <div class="skill-tags">
+                     <span class="skill-tag">HTML</span>
+                     <span class="skill-tag">CSS</span>
+                     <span class="skill-tag">Flask</span>
+                     <span class="skill-tag">Bootstrap</span>
+                     <span class="skill-tag">JavaScript</span>
+                     <span class="skill-tag">Streamlit</span>
+                  </div>
+               </div>
+
+               <div class="skill-category">
+                  <h3>ML & Data Science</h3>
+                  <div class="skill-tags">
+                     <span class="skill-tag">PyTorch</span>
+                     <span class="skill-tag">NumPy</span>
+                     <span class="skill-tag">Pandas</span>
+                     <span class="skill-tag">Scikit-learn</span>
+                  </div>
+               </div>
+
+               <div class="skill-category">
+                  <h3>Tools & Databases</h3>
+                  <div class="skill-tags">
+                     <span class="skill-tag">Git/GitHub</span>
+                     <span class="skill-tag">MySQL</span>
+                     <span class="skill-tag">LaTeX</span>
+                     <span class="skill-tag">Docker</span>
+                     <span class="skill-tag">Relational Databases</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section id="projects">
+         <div class="container">
+            <div class="section-header">
+               <h2>Featured Projects</h2>
+               <p>Some of my recent work in software engineering and machine learning</p>
+            </div>
+            <div class="projects-grid">
+               <div class="project-card">
+                  <div class="project-content">
+                     <div class="project-title">NBA Championship Prediction System</div>
+                     <div class="project-description">
+                        Engineered an end-to-end sports analytics pipeline using Python, PyTorch, and AWS S3, implementing ensemble ML models
+                        (neural networks, XGBoost, random forest) with 91% accuracy and deployed via interactive Streamlit web app with
+                        real-time predictions.
+
+                     </div>
+                     <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">PyTorch</span>
+                        <span class="tech-tag">NumPy</span>
+                        <span class="tech-tag">Pandas</span>
+                        <span class="tech-tag">Scikit-learn</span>
+                        <span class="tech-tag">Streamlit</span>
+                     </div>
+                     <div class="project-links">
+                        <a href="https://github.com/1allenlu/NBA-Championship-Predictor" class="project-link" target="blank">View Project →</a>
+                        
+                     </div>
+                  </div>
+               </div>
+
+               <div class="project-card">
+                  <div class="project-content">
+                     <div class="project-title">Loan Default Predictor</div>
+                     <div class="project-description">
+                        Developed a machine learning system using Python, Sklearn, and neural networks to predict loan defaults with 92.1%
+                        accuracy, processing 32K+ entries through advanced preprocessing, PCA, and hyperparameter optimization.
+                     </div>
+                     <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Sklearn</span>
+                        <span class="tech-tag">NumPy</span>
+                        <span class="tech-tag">Matplotlib</span>
+                     </div>
+                     <div class="project-links">
+                        <a href="https://github.com/1allenlu/Loan-Default-Prediction" class="project-link" target="blank">View Project →</a>
+                     </div>
+                  </div>
+               </div>
+
+               <div class="project-card">
+                  <div class="project-content">
+                     <div class="project-title">Airline Ticket Reservation System</div>
+                     <div class="project-description">
+                        Built a full-stack flight booking platform using Python Flask, MySQL, and responsive HTML/CSS, featuring secure user
+                        authentication, concurrent request handling, and intuitive interfaces for both customers and airline staff.
+                     </div>
+                     <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Flask</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">Relational Databases</span>
+                        <span class="tech-tag">HTML/CSS</span>
+                     </div>
+                     <div class="project-links">
+                        <a href="https://github.com/1allenlu/Online-Airline-Ticket-Reservation-System" class="project-link" target="blank">View Project →</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="contact">
+         <div class="container">
+            <div class="section-header">
+               <h2>Let's Connect</h2>
+               <p>I'm actively seeking new grad SWE/MLE/SDE/DE opportunities. Let's chat!</p>
+            </div>
+
+
+            <div class="contact-info">
+               <div class="contact-item">
+                  <h4>Email</h4>
+                  <a href="mailto:allenlu@nyu.edu">allenlu@nyu.edu</a>
+               </div>
+               <div class="contact-item">
+                  <h4>LinkedIn</h4>
+                  <a href="https://www.linkedin.com/in/allen-lu526/" target="_blank" class="contact-social">
+                     <img src="assets/homepage/linkedin.png" alt="LinkedIn" class="contact-icon">
+                     Connect with me
+                  </a>
+               </div>
+               <div class="contact-item">
+                  <h4>GitHub</h4>
+                  <a href="https://github.com/1allenlu" target="_blank" class="contact-social">
+                     <img src="assets/homepage/github.png" alt="GitHub" class="contact-icon">
+                     View my projects
+                  </a>
+               </div>     </div>
+
+         </div>
+      </section>
+   </main>
+
    <script src="script.js"></script>
 </body>
 
