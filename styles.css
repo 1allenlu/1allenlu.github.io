@@ -516,6 +516,7 @@ section:nth-child(even) {
     color: var(--white);
 }
 
+
 .contact-info {
     display: flex;
     justify-content: center;
@@ -525,6 +526,10 @@ section:nth-child(even) {
 
 .contact-item {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Add this */
 }
 
 .contact-item h4 {
@@ -538,6 +543,31 @@ section:nth-child(even) {
     text-decoration: none;
     font-size: 1.05rem;
     transition: all 0.3s ease;
+    display: flex;
+    /* Add this */
+    align-items: center;
+    /* Add this */
+    justify-content: center;
+    /* Add this */
+    gap: 0.5rem;
+    /* Add this for icon spacing if you have icons */
+}
+
+/* Mobile specific fixes */
+@media (max-width: 768px) {
+    .contact-info {
+        flex-direction: column;
+        gap: 2rem;
+        align-items: center;
+        /* Add this */
+    }
+
+    .contact-item {
+        width: 100%;
+        /* Add this */
+        max-width: 250px;
+        /* Add this */
+    }
 }
 
 .contact-item a:hover {
