@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery - Allen Lu</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="gallery.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        
+        <nav class="container">
+            <a href="index.html" class="logo">Allen Lu</a>
+            <ul class="nav-links">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="index.html#experience">Experiences</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="gallery-hero">
+            <div class="container">
+                <h1>Photo Gallery</h1>
+                <p>Capturing moments through my lens</p>
+            </div>
+        </section>
+
+
+        <!-- Gallery Grid -->
+        <section class="gallery-section">
+            <div class="container">
+                <!-- Loading indicator -->
+                <div class="loading-indicator">
+                    <div class="loading-spinner"></div>
+                    <p>Loading gallery...</p>
+                </div>
+
+                <!-- Gallery Grid -->
+                <div class="gallery-grid" id="galleryGrid">
+                    <!-- Photo items will be dynamically loaded here -->
+
+                    <!-- Example photo items (replace with your actual photos) -->
+                    <div class="gallery-item" data-category="street" data-aos="fade-up">
+                        <div class="image-container">
+                            <div class="image-placeholder" data-src="photos/street1.jpg"
+                                data-alt="NYC Street Photography">
+                                <div class="placeholder-content">Loading...</div>
+                            </div>
+                            <div class="image-overlay">
+                                <div class="image-info">
+                                    <h3>NYC Streets</h3>
+                                    <p>Street Photography</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item" data-category="portrait" data-aos="fade-up" data-aos-delay="100">
+                        <div class="image-container">
+                            <div class="image-placeholder" data-src="photos/portrait1.jpg"
+                                data-alt="Portrait Photography">
+                                <div class="placeholder-content">Loading...</div>
+                            </div>
+                            <div class="image-overlay">
+                                <div class="image-info">
+                                    <h3>Portrait Session</h3>
+                                    <p>Portrait</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item" data-category="fashion" data-aos="fade-up" data-aos-delay="200">
+                        <div class="image-container">
+                            <div class="image-placeholder" data-src="photos/fashion1.jpg"
+                                data-alt="Fashion Photography">
+                                <div class="placeholder-content">Loading...</div>
+                            </div>
+                            <div class="image-overlay">
+                                <div class="image-info">
+                                    <h3>Fashion Forward</h3>
+                                    <p>Fashion</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item" data-category="urban" data-aos="fade-up" data-aos-delay="300">
+                        <div class="image-container">
+                            <div class="image-placeholder" data-src="photos/urban1.jpg" data-alt="Urban Photography">
+                                <div class="placeholder-content">Loading...</div>
+                            </div>
+                            <div class="image-overlay">
+                                <div class="image-info">
+                                    <h3>Urban Exploration</h3>
+                                    <p>Urban</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add more gallery items as needed -->
+                    <!-- Each item should follow the same structure -->
+                </div>
+
+                <!-- Load More Button -->
+                <div class="load-more-container">
+                    <button class="load-more-btn" id="loadMoreBtn">Load More Photos</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lightbox Modal -->
+        <div class="lightbox" id="lightbox">
+            <div class="lightbox-content">
+                <span class="lightbox-close">&times;</span>
+                <img class="lightbox-image" id="lightboxImage" src="" alt="">
+                <div class="lightbox-info">
+                    <h3 id="lightboxTitle"></h3>
+                    <p id="lightboxCategory"></p>
+                </div>
+                <div class="lightbox-nav">
+                    <button class="lightbox-prev" id="lightboxPrev">&#8249;</button>
+                    <button class="lightbox-next" id="lightboxNext">&#8250;</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Back to Portfolio Button -->
+    <div class="back-to-portfolio">
+        <a href="index.html" class="btn btn-primary">← Back to Portfolio</a>
+    </div>
+
+    <script src="gallery.js"></script>
+</body>
+
+</html>
