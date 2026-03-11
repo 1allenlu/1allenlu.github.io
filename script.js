@@ -1,5 +1,16 @@
 // Smooth scrolling for navigation links
 document.addEventListener('DOMContentLoaded', function () {
+    // Scroll progress bar
+    const scrollProgress = document.getElementById('scrollProgress');
+    if (scrollProgress) {
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            scrollProgress.style.width = pct + '%';
+        });
+    }
+
     // Smooth scroll for anchor links
     const navLinks = document.querySelectorAll('a[href^="#"]');
 
