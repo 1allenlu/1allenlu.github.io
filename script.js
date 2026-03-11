@@ -2,14 +2,55 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Scroll progress bar
     const scrollProgress = document.getElementById('scrollProgress');
-    if (scrollProgress) {
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-            scrollProgress.style.width = pct + '%';
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (scrollProgress) {
+            scrollProgress.style.width = docHeight > 0 ? (scrollTop / docHeight) * 100 + '%' : '0%';
+        }
+        if (scrollToTopBtn) {
+            scrollToTopBtn.classList.toggle('visible', scrollTop > 400);
+        }
+    });
+
+    if (scrollToTopBtn) {
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
+
+    // Active nav highlight on scroll
+    const navLinkEls = document.querySelectorAll('.nav-links a[href^="#"]');
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                navLinkEls.forEach(a => {
+                    a.classList.remove('nav-active');
+                    if (a.getAttribute('href') === `#${id}`) a.classList.add('nav-active');
+                });
+            }
+        });
+    }, { threshold: 0.35 });
+
+    document.querySelectorAll('section[id]').forEach(s => sectionObserver.observe(s));
+
+    // Experience read more / less
+    document.querySelectorAll('.experience-description').forEach(desc => {
+        if (desc.scrollHeight > 90) {
+            desc.classList.add('collapsed');
+            const btn = document.createElement('button');
+            btn.className = 'experience-toggle-btn';
+            btn.textContent = 'Show more';
+            btn.addEventListener('click', () => {
+                const isCollapsed = desc.classList.toggle('collapsed');
+                btn.textContent = isCollapsed ? 'Show more' : 'Show less';
+            });
+            desc.parentNode.insertBefore(btn, desc.nextSibling);
+        }
+    });
 
     // Smooth scroll for anchor links
     const navLinks = document.querySelectorAll('a[href^="#"]');

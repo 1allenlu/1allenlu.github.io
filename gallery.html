@@ -31,6 +31,11 @@
                 <li><a href="gallery.html" class="active">Gallery</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
+            <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </nav>
     </header>
 
@@ -40,8 +45,24 @@
             <div class="container">
                 <h1>Photo Gallery</h1>
                 <p>Capturing moments through my lens</p>
+                <!-- Stats strip -->
+                <div class="gallery-stats">
+                    <span id="statsCount">18 Photos</span>
+                    <span class="stat-dot">·</span>
+                    <span>NYC &amp; Beyond</span>
+                    <span class="stat-dot">·</span>
+                    <span>Through My Lens</span>
+                </div>
             </div>
         </section>
+
+        <!-- Featured Photo Banner -->
+        <div class="gallery-featured" id="galleryFeatured">
+            <div class="gallery-featured-overlay">
+                <span class="featured-tag">Featured</span>
+                <p class="featured-count" id="featuredCount">Loading collection...</p>
+            </div>
+        </div>
 
         <!-- Gallery Grid -->
         <section class="gallery-section">
@@ -54,11 +75,6 @@
 
                 <!-- Gallery Grid (dynamically populated) -->
                 <div class="gallery-grid" id="galleryGrid"></div>
-
-                <!-- Load More Button -->
-                <div class="load-more-container">
-                    <button class="load-more-btn" id="loadMoreBtn">Load More Photos</button>
-                </div>
             </div>
         </section>
 
@@ -72,11 +88,27 @@
                     <p id="lightboxCategory"></p>
                     <p class="lightbox-counter" id="lightboxCounter"></p>
                 </div>
+                <!-- Slideshow controls -->
+                <div class="slideshow-controls">
+                    <button class="slideshow-play-btn" id="slideshowBtn" aria-label="Play slideshow">&#9654;</button>
+                    <div class="slideshow-progress-bar">
+                        <div class="slideshow-progress-fill" id="slideshowFill"></div>
+                    </div>
+                </div>
+                <!-- Filmstrip -->
+                <div class="filmstrip-container">
+                    <div class="filmstrip" id="filmstrip"></div>
+                </div>
                 <div class="lightbox-nav">
                     <button class="lightbox-prev" id="lightboxPrev">&#8249;</button>
                     <button class="lightbox-next" id="lightboxNext">&#8250;</button>
                 </div>
             </div>
+        </div>
+
+        <!-- Keyboard shortcut hint (shown once) -->
+        <div class="keyboard-hint" id="keyboardHint">
+            <kbd>&#8592;</kbd> <kbd>&#8594;</kbd> navigate &nbsp;&middot;&nbsp; <kbd>Esc</kbd> close
         </div>
     </main>
 
@@ -84,6 +116,9 @@
     <div class="back-to-portfolio">
         <a href="index.html" class="btn btn-primary">&#8592; Back to Portfolio</a>
     </div>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">&#8679;</button>
 
     <script src="gallery.js"></script>
 </body>

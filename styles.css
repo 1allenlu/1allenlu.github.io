@@ -788,3 +788,196 @@ section:nth-child(even) {
         text-align: center;
     }
 }
+
+/* Active nav link on scroll */
+.nav-links a.nav-active {
+    color: var(--carolina-blue);
+}
+
+.nav-links a.nav-active::after {
+    width: 100%;
+}
+
+/* Project Card Banners */
+.project-card {
+    position: relative;
+}
+
+.project-banner {
+    height: 120px;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.04) 0px,
+        rgba(255,255,255,0.04) 1px,
+        transparent 1px,
+        transparent 12px
+    );
+}
+
+.project-banner::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    right: -30px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.project-banner--1 {
+    background: linear-gradient(135deg, var(--carolina-blue) 0%, var(--dark-blue) 100%);
+}
+
+.project-banner--2 {
+    background: linear-gradient(135deg, #2E5984 0%, #1a3050 100%);
+}
+
+.project-banner--3 {
+    background: linear-gradient(135deg, #3a7ab5 0%, #4B9CD3 100%);
+}
+
+.project-banner--4 {
+    background: linear-gradient(135deg, #1a3050 0%, #2E5984 100%);
+}
+
+/* Experience Collapsible */
+.experience-description.collapsed {
+    max-height: 72px;
+    overflow: hidden;
+    position: relative;
+}
+
+.experience-description.collapsed::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background: linear-gradient(transparent, var(--white));
+    pointer-events: none;
+}
+
+.experience-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--carolina-blue);
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    padding: 0.4rem 0;
+    display: block;
+    margin-top: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.experience-toggle-btn:hover {
+    color: var(--dark-blue);
+}
+
+/* Footer */
+footer {
+    background: var(--dark-blue);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 2.5rem 0;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.footer-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--white);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.footer-logo:hover {
+    opacity: 0.8;
+}
+
+.footer-nav {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.footer-nav a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.footer-nav a:hover {
+    color: var(--white);
+}
+
+.footer-copy {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+
+    .footer-nav {
+        gap: 1.2rem;
+        justify-content: center;
+    }
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    width: 44px;
+    height: 44px;
+    background: var(--carolina-blue);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(75, 156, 211, 0.4);
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    z-index: 1500;
+}
+
+.scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+    background: var(--dark-blue);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(75, 156, 211, 0.5);
+}
