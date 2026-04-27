@@ -853,6 +853,10 @@ section:nth-child(even) {
     background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
 }
 
+.project-banner--6 {
+    background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 50%, #52b788 100%);
+}
+
 /* Experience Collapsible */
 .experience-description.collapsed {
     max-height: 72px;
