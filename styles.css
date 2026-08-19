@@ -769,6 +769,12 @@ section:nth-child(even) {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
+.education-items {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
 .education-item {
     text-align: left;
 }
