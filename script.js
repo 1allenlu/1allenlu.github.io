@@ -1,19 +1,56 @@
-// Smooth scrolling for navigation links
 document.addEventListener('DOMContentLoaded', function () {
-    // Scroll progress bar
+    const header = document.querySelector('header');
     const scrollProgress = document.getElementById('scrollProgress');
     const scrollToTopBtn = document.getElementById('scrollToTop');
+    const navLinkEls = document.querySelectorAll('.nav-links a[href^="#"]');
 
-    window.addEventListener('scroll', () => {
+    // Sections fade in once their top edge scrolls into view, and the nav
+    // link highlights whichever section's top has passed the upper third of
+    // the viewport. Both are driven by getBoundingClientRect() on every
+    // scroll tick rather than IntersectionObserver's percent-of-area
+    // threshold, which fails to ever fire for a section taller than the
+    // viewport (e.g. the Projects timeline) since that percentage is never
+    // reached.
+    const revealSections = document.querySelectorAll('main section:not(.hero)');
+    revealSections.forEach(s => s.classList.add('reveal-init'));
+    const navSections = document.querySelectorAll('main section[id]');
+
+    function updateOnScroll() {
         const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const viewportH = window.innerHeight;
+        const docHeight = document.documentElement.scrollHeight - viewportH;
+
         if (scrollProgress) {
             scrollProgress.style.width = docHeight > 0 ? (scrollTop / docHeight) * 100 + '%' : '0%';
         }
         if (scrollToTopBtn) {
             scrollToTopBtn.classList.toggle('visible', scrollTop > 400);
         }
-    });
+        if (header) {
+            header.classList.toggle('scrolled', scrollTop > 20);
+        }
+
+        revealSections.forEach(s => {
+            if (!s.classList.contains('animate-in') && s.getBoundingClientRect().top < viewportH * 0.92) {
+                s.classList.add('animate-in');
+            }
+        });
+
+        let activeId = null;
+        navSections.forEach(s => {
+            if (s.getBoundingClientRect().top <= viewportH * 0.35) {
+                activeId = s.id;
+            }
+        });
+        if (activeId) {
+            navLinkEls.forEach(a => {
+                a.classList.toggle('nav-active', a.getAttribute('href') === `#${activeId}`);
+            });
+        }
+    }
+
+    window.addEventListener('scroll', updateOnScroll);
+    updateOnScroll();
 
     if (scrollToTopBtn) {
         scrollToTopBtn.addEventListener('click', () => {
@@ -21,332 +58,126 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Active nav highlight on scroll
-    const navLinkEls = document.querySelectorAll('.nav-links a[href^="#"]');
-    const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const id = entry.target.getAttribute('id');
-                navLinkEls.forEach(a => {
-                    a.classList.remove('nav-active');
-                    if (a.getAttribute('href') === `#${id}`) a.classList.add('nav-active');
-                });
-            }
-        });
-    }, { threshold: 0.35 });
-
-    document.querySelectorAll('section[id]').forEach(s => sectionObserver.observe(s));
-
-    // Experience read more / less
-    document.querySelectorAll('.experience-description').forEach(desc => {
-        if (desc.scrollHeight > 90) {
-            desc.classList.add('collapsed');
-            const btn = document.createElement('button');
-            btn.className = 'experience-toggle-btn';
-            btn.textContent = 'Show more';
-            btn.addEventListener('click', () => {
-                const isCollapsed = desc.classList.toggle('collapsed');
-                btn.textContent = isCollapsed ? 'Show more' : 'Show less';
-            });
-            desc.parentNode.insertBefore(btn, desc.nextSibling);
-        }
-    });
-
-    // Smooth scroll for anchor links
-    const navLinks = document.querySelectorAll('a[href^="#"]');
-
-    navLinks.forEach(link => {
+    // Smooth scroll for in-page anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', function (e) {
-            e.preventDefault();
-
             const targetId = this.getAttribute('href');
+            if (targetId === '#' || targetId.length < 2) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
             const targetSection = document.querySelector(targetId);
-
             if (targetSection) {
-                const headerHeight = document.querySelector('header').offsetHeight;
+                e.preventDefault();
+                const headerHeight = header ? header.offsetHeight : 0;
                 const targetPosition = targetSection.offsetTop - headerHeight - 20;
-
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
             }
         });
     });
 
-    // Mobile menu toggle functionality
+    // Mobile menu toggle
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const navLinksContainer = document.querySelector('.nav-links');
 
-    if (mobileMenuToggle) {
+    if (mobileMenuToggle && navLinksContainer) {
         mobileMenuToggle.addEventListener('click', function () {
             navLinksContainer.classList.toggle('mobile-open');
             mobileMenuToggle.classList.toggle('active');
         });
+
+        navLinksContainer.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => {
+                navLinksContainer.classList.remove('mobile-open');
+                mobileMenuToggle.classList.remove('active');
+            });
+        });
     }
 
-    // Add scroll effect to header
-    // let lastScrollTop = 0;
-    // const header = document.querySelector('header');
-
-    // window.addEventListener('scroll', function () {
-    //     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-    //     if (scrollTop > lastScrollTop && scrollTop > 100) {
-    //         // Scrolling down
-    //         header.style.transform = 'translateY(-100%)';
-    //     } else {
-    //         // Scrolling up
-    //         header.style.transform = 'translateY(0)';
-    //     }
-
-    //     lastScrollTop = scrollTop;
-    // });
-
-    // Add animation on scroll for sections
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function (entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-            }
-        });
-    }, observerOptions);
-
-    // Observe all sections for animation
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        observer.observe(section);
-    });
-
-    // Animate skill tags on hover
-    const skillTags = document.querySelectorAll('.skill-tag');
-    skillTags.forEach(tag => {
-        tag.addEventListener('mouseenter', function () {
-            this.style.transform = 'translateY(-3px) scale(1.05)';
-        });
-
-        tag.addEventListener('mouseleave', function () {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-
-    // Add typing effect to hero subtitle
-    const subtitle = document.querySelector('.hero .subtitle');
-    if (subtitle) {
-        const text = subtitle.textContent;
-        subtitle.textContent = '';
-
-        let i = 0;
-        const typeWriter = () => {
-            if (i < text.length) {
-                subtitle.textContent += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
-            }
-        };
-
-        setTimeout(typeWriter, 1000);
-    }
-
-    // Add parallax effect to hero section
-    window.addEventListener('scroll', function () {
-        const scrolled = window.pageYOffset;
-        const hero = document.querySelector('.hero');
-        const rate = scrolled * -0.5;
-
-        if (hero) {
-            hero.style.transform = `translateY(${rate}px)`;
-        }
-    });
-
-    // Add click effect to buttons
-    const buttons = document.querySelectorAll('.btn');
-    buttons.forEach(button => {
+    // Ripple effect on buttons
+    document.querySelectorAll('.btn').forEach(button => {
         button.addEventListener('click', function (e) {
             const ripple = document.createElement('span');
             const rect = this.getBoundingClientRect();
             const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
 
             ripple.style.width = ripple.style.height = size + 'px';
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
+            ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
             ripple.classList.add('ripple');
 
             this.appendChild(ripple);
-
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
+            setTimeout(() => ripple.remove(), 600);
         });
     });
 
-    // Image replacement functionality
-    const profileImage = document.getElementById('profile-image');
-    const placeholderText = document.querySelector('.image-placeholder-text');
+    // Hero subtitle: rotate through roles (starts from the static fallback
+    // text already in the markup, so it degrades gracefully without JS)
+    const subtitle = document.querySelector('.hero .subtitle');
+    if (subtitle && subtitle.dataset.words) {
+        const words = subtitle.dataset.words.split(',');
+        subtitle.textContent = '';
+        const cursor = document.createElement('span');
+        cursor.className = 'cursor';
+        let wordIndex = 0;
+        let charIndex = 0;
+        let deleting = false;
 
-    if (profileImage && placeholderText) {
-        profileImage.addEventListener('click', function () {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-
-            input.onchange = function (e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        profileImage.src = e.target.result;
-                        placeholderText.style.display = 'none';
-                    };
-                    reader.readAsDataURL(file);
+        const tick = () => {
+            const current = words[wordIndex];
+            if (!deleting) {
+                charIndex++;
+                if (charIndex > current.length) {
+                    deleting = true;
+                    setTimeout(tick, 1400);
+                    return;
                 }
-            };
+            } else {
+                charIndex--;
+                if (charIndex === 0) {
+                    deleting = false;
+                    wordIndex = (wordIndex + 1) % words.length;
+                }
+            }
+            subtitle.textContent = current.slice(0, charIndex);
+            subtitle.appendChild(cursor);
+            setTimeout(tick, deleting ? 40 : 80);
+        };
 
-            input.click();
-        });
+        setTimeout(tick, 800);
     }
 
-    // Add loading animation for project cards
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
+    // Collapse long tag lists (skills + project tech) behind a "+N more" toggle
+    const TAG_LIMIT = 5;
+    document.querySelectorAll('.skill-tags, .project-tech').forEach(container => {
+        const tags = Array.from(container.children);
+        if (tags.length <= TAG_LIMIT) return;
 
-        setTimeout(() => {
-            card.style.transition = 'all 0.6s ease';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, index * 200);
-    });
+        tags.slice(TAG_LIMIT).forEach(tag => tag.classList.add('tag-hidden'));
 
-    // Dark mode toggle (optional feature)
-    const createDarkModeToggle = () => {
         const toggle = document.createElement('button');
-        toggle.innerHTML = '🌙';
-        toggle.style.position = 'fixed';
-        toggle.style.bottom = '20px';
-        toggle.style.right = '20px';
-        toggle.style.width = '50px';
-        toggle.style.height = '50px';
-        toggle.style.borderRadius = '50%';
-        toggle.style.border = 'none';
-        toggle.style.background = 'var(--carolina-blue)';
-        toggle.style.color = 'white';
-        toggle.style.fontSize = '20px';
-        toggle.style.cursor = 'pointer';
-        toggle.style.zIndex = '1000';
-        toggle.style.transition = 'all 0.3s ease';
+        toggle.type = 'button';
+        toggle.className = 'tag-toggle visible';
+        const hiddenCount = tags.length - TAG_LIMIT;
+        toggle.textContent = `+${hiddenCount} more`;
 
         toggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            toggle.innerHTML = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+            const isExpanded = toggle.dataset.expanded === 'true';
+            tags.slice(TAG_LIMIT).forEach(tag => tag.classList.toggle('tag-hidden', isExpanded));
+            toggle.dataset.expanded = String(!isExpanded);
+            toggle.textContent = isExpanded ? `+${hiddenCount} more` : 'Show less';
         });
 
-        document.body.appendChild(toggle);
-    };
-
-    // Uncomment the line below to enable dark mode toggle
-    // createDarkModeToggle();
-});
-
-// Add CSS for animations and ripple effect
-const style = document.createElement('style');
-style.textContent = `
-    header {
-        transition: transform 0.3s ease;
-    }
-    
-    .animate-in {
-        animation: slideInUp 0.8s ease forwards;
-    }
-    
-    @keyframes slideInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .btn {
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .ripple {
-        position: absolute;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        transform: scale(0);
-        animation: ripple-animation 0.6s linear;
-        pointer-events: none;
-    }
-    
-    @keyframes ripple-animation {
-        to {
-            transform: scale(4);
-            opacity: 0;
-        }
-    }
-    
-    .mobile-open {
-        display: flex !important;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: white;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        padding: 1rem;
-        gap: 1rem;
-    }
-    
-    .mobile-menu-toggle.active span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-    }
-    
-    .mobile-menu-toggle.active span:nth-child(2) {
-        opacity: 0;
-    }
-    
-    .mobile-menu-toggle.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -6px);
-    }
-    
-    .dark-mode {
-        --background: #0f0f0f;
-        --white: #1a1a1a;
-        --text-dark: #ffffff;
-        --text-light: #cccccc;
-    }
-    
-    .image-placeholder-text {
-        cursor: pointer;
-        transition: opacity 0.3s ease;
-    }
-    
-    .image-placeholder-text:hover {
-        opacity: 0.8;
-    }
-`;
-
-document.head.appendChild(style);
-
-document.querySelector('.logo').addEventListener('click', function (e) {
-    e.preventDefault();
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+        container.insertAdjacentElement('afterend', toggle);
     });
+
+    // Logo scrolls to top
+    const logo = document.querySelector('.logo');
+    if (logo) {
+        logo.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 });
