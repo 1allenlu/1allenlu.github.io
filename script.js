@@ -180,4 +180,22 @@ document.addEventListener('DOMContentLoaded', function () {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
+
+    // Subtle cursor-tracked tilt on cards — kept small (±3deg) so it reads
+    // as polish rather than a gimmick. Only engages on pointer devices;
+    // touch screens simply never fire mousemove here.
+    const TILT_MAX_DEG = 3;
+    document.querySelectorAll('.role-card, .project-timeline-card, .skill-category').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const px = (e.clientX - rect.left) / rect.width - 0.5;
+            const py = (e.clientY - rect.top) / rect.height - 0.5;
+            const rotateX = (-py * TILT_MAX_DEG * 2).toFixed(2);
+            const rotateY = (px * TILT_MAX_DEG * 2).toFixed(2);
+            card.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+    });
 });
