@@ -51,3 +51,22 @@
         color-scheme: dark;
     }
 }
+
+/* The nav toggle sets data-theme explicitly, which needs to win over the
+   system preference in both directions — the block above only overrides
+   a system light preference toward dark; this one forces dark even when
+   the system itself is set to light. */
+:root[data-theme="dark"] {
+    --bg: #000000;
+    --bg-alt: #0a0a0a;
+    --surface: #161617;
+    --text: #f5f5f7;
+    --text-secondary: #a1a1a6;
+    --divider: rgba(255, 255, 255, 0.12);
+    --accent: #6dbaea;
+    --accent-strong: #9ed2f0;
+    --accent-tint: rgba(109, 186, 234, 0.14);
+    --accent-glow: rgba(109, 186, 234, 0.3);
+    --nav-bg: rgba(0, 0, 0, 0.72);
+    color-scheme: dark;
+}

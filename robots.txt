@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://1allenlu.github.io/sitemap.xml

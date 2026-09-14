@@ -70,10 +70,59 @@ nav {
     text-decoration: none;
 }
 
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+}
+
 .nav-links {
     display: flex;
     list-style: none;
     gap: 2.1rem;
+}
+
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+
+.theme-toggle:hover {
+    color: var(--text);
+    background: var(--divider);
+}
+
+.theme-icon {
+    display: block;
+    width: 17px;
+    height: 17px;
+}
+
+.theme-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.theme-icon-moon {
+    display: none;
+}
+
+:root[data-theme="dark"] .theme-icon-sun {
+    display: none;
+}
+
+:root[data-theme="dark"] .theme-icon-moon {
+    display: block;
 }
 
 .nav-links a {
@@ -199,6 +248,15 @@ body.gallery-page header:not(.scrolled) .mobile-menu-toggle span {
     background: #ffffff;
 }
 
+body.gallery-page header:not(.scrolled) .theme-toggle {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+body.gallery-page header:not(.scrolled) .theme-toggle:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+}
+
 /* Gallery Section */
 .gallery-section {
     padding: 6rem 0;
@@ -254,10 +312,6 @@ body.gallery-page header:not(.scrolled) .mobile-menu-toggle span {
 .gallery-item.visible {
     opacity: 1;
     transform: translateY(0);
-}
-
-.gallery-item.hidden {
-    display: none;
 }
 
 .image-container {
@@ -322,32 +376,32 @@ body.gallery-page header:not(.scrolled) .mobile-menu-toggle span {
     position: absolute;
 }
 
-/* Image Overlay — slides up from bottom */
-.image-overlay {
+/* Caption tag — a small always-visible label per photo (like iOS Photos'
+   location tags on thumbnails), not something that only appears on hover */
+.image-caption {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
-    transform: translateY(100%);
-    transition: transform var(--dur-med) var(--ease);
-    display: flex;
-    align-items: flex-end;
-    padding: 1.25rem;
-}
-
-.image-container:hover .image-overlay {
-    transform: translateY(0);
-}
-
-.image-info {
+    left: 0.75rem;
+    bottom: 0.75rem;
+    max-width: calc(100% - 1.5rem);
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.55);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
     color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+    z-index: 2;
+    transition: background var(--dur-fast) var(--ease);
 }
 
-.image-info h3 {
-    font-size: 1rem;
-    font-weight: 500;
-    margin: 0;
+.image-container:hover .image-caption {
+    background: rgba(0, 0, 0, 0.72);
 }
 
 /* Lightbox */

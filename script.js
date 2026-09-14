@@ -82,6 +82,22 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Theme toggle: explicit choice overrides the system preference and is
+    // remembered across visits (the inline script in <head> applies it
+    // before first paint, so there's no flash of the wrong theme on load).
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+
+        themeToggle.addEventListener('click', () => {
+            const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            try { localStorage.setItem('theme', next); } catch (e) {}
+            themeToggle.setAttribute('aria-label', next === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+        });
+    }
+
     // Mobile menu toggle
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const navLinksContainer = document.querySelector('.nav-links');

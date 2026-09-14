@@ -6,30 +6,29 @@ document.addEventListener('DOMContentLoaded', function () {
     const config = {
         currentImageIndex: 0,
         allImages: [],
-        visibleImages: [],
-        currentFilter: 'all'
+        visibleImages: []
     };
 
     // Photo data
     const photoData = [
-        { src: 'assets/gallery/photo1.jpg',  category: 'all', title: 'Surfers at Sunset',   description: 'Golden hour on the Pacific.' },
-        { src: 'assets/gallery/photo2.jpg',  category: 'all', title: 'Night Drive',          description: 'A JDM sedan under neon.' },
-        { src: 'assets/gallery/photo3.jpg',  category: 'all', title: 'Coastal Sunset',       description: 'Sun meets the horizon.' },
-        { src: 'assets/gallery/photo4.jpg',  category: 'all', title: 'Harbor at Dusk',       description: 'Boats drifting home for the night.' },
-        { src: 'assets/gallery/photo5.jpg',  category: 'all', title: 'Airborne',             description: 'Catching air on a late afternoon.' },
-        { src: 'assets/gallery/photo6.jpg',  category: 'all', title: 'Clipper City',         description: 'A tall ship crossing the harbor.' },
-        { src: 'assets/gallery/photo7.jpg',  category: 'all', title: 'Turret & Sky',         description: "Old Quebec's rooftops." },
-        { src: 'assets/gallery/photo8.jpg',  category: 'all', title: 'Snow Day',             description: 'Old Quebec under fresh snow.' },
-        { src: 'assets/gallery/photo9.jpg',  category: 'all', title: 'Chateau Frontenac',    description: "Quebec City's landmark hotel." },
-        { src: 'assets/gallery/photo10.jpg', category: 'all', title: 'Cherry Blossoms',      description: 'The Jefferson Memorial in bloom.' },
-        { src: 'assets/gallery/photo11.jpg', category: 'all', title: 'Fuji Through the Wires', description: 'Mount Fuji on a hazy morning.' },
-        { src: 'assets/gallery/photo12.jpg', category: 'all', title: 'Blossoms & Friends',   description: 'A huddle under the cherry trees.' },
-        { src: 'assets/gallery/photo13.jpg', category: 'all', title: 'Coastal Drive',        description: 'A 911 along the shoreline.' },
-        { src: 'assets/gallery/photo14.jpg', category: 'all', title: 'Low Tide',             description: 'Long shadows on the sand.' },
-        { src: 'assets/gallery/photo15.jpg', category: 'all', title: 'Rooftops to the Sea',  description: 'A hillside view over the coast.' },
-        { src: 'assets/gallery/photo16.jpg', category: 'all', title: 'In Primer',           description: 'Fuselages waiting for paint.' },
-        { src: 'assets/gallery/photo17.jpg', category: 'all', title: 'Niagara in Winter',    description: 'Horseshoe Falls, frozen at the edges.' },
-        { src: 'assets/gallery/photo18.jpg', category: 'all', title: 'Fallsview',            description: "Niagara's skyline under snow." },
+        { src: 'assets/gallery/photo1.jpg',  title: 'Surfers at Sunset',   description: 'Golden hour on the Pacific.' },
+        { src: 'assets/gallery/photo2.jpg',  title: 'Night Drive',          description: 'A JDM sedan under neon.' },
+        { src: 'assets/gallery/photo3.jpg',  title: 'Coastal Sunset',       description: 'Sun meets the horizon.' },
+        { src: 'assets/gallery/photo4.jpg',  title: 'Harbor at Dusk',       description: 'Boats drifting home for the night.' },
+        { src: 'assets/gallery/photo5.jpg',  title: 'Airborne',             description: 'Catching air on a late afternoon.' },
+        { src: 'assets/gallery/photo6.jpg',  title: 'Clipper City',         description: 'A tall ship crossing the harbor.' },
+        { src: 'assets/gallery/photo7.jpg',  title: 'Turret & Sky',         description: "Old Quebec's rooftops." },
+        { src: 'assets/gallery/photo8.jpg',  title: 'Snow Day',             description: 'Old Quebec under fresh snow.' },
+        { src: 'assets/gallery/photo9.jpg',  title: 'Chateau Frontenac',    description: "Quebec City's landmark hotel." },
+        { src: 'assets/gallery/photo10.jpg', title: 'Cherry Blossoms',      description: 'The Jefferson Memorial in bloom.' },
+        { src: 'assets/gallery/photo11.jpg', title: 'Fuji Through the Wires', description: 'Mount Fuji on a hazy morning.' },
+        { src: 'assets/gallery/photo12.jpg', title: 'Blossoms & Friends',   description: 'A huddle under the cherry trees.' },
+        { src: 'assets/gallery/photo13.jpg', title: 'Coastal Drive',        description: 'A 911 along the shoreline.' },
+        { src: 'assets/gallery/photo14.jpg', title: 'Low Tide',             description: 'Long shadows on the sand.' },
+        { src: 'assets/gallery/photo15.jpg', title: 'Rooftops to the Sea',  description: 'A hillside view over the coast.' },
+        { src: 'assets/gallery/photo16.jpg', title: 'In Primer',           description: 'Fuselages waiting for paint.' },
+        { src: 'assets/gallery/photo17.jpg', title: 'Niagara in Winter',    description: 'Horseshoe Falls, frozen at the edges.' },
+        { src: 'assets/gallery/photo18.jpg', title: 'Fallsview',            description: "Niagara's skyline under snow." },
     ];
 
     // Fisher-Yates shuffle for random layout on each reload
@@ -82,6 +81,22 @@ document.addEventListener('DOMContentLoaded', function () {
             headerTicking = false;
         });
     }, { passive: true });
+
+    // Theme toggle: explicit choice overrides the system preference and is
+    // remembered across visits (the inline script in <head> applies it
+    // before first paint, so there's no flash of the wrong theme on load).
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+
+        themeToggle.addEventListener('click', () => {
+            const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            try { localStorage.setItem('theme', next); } catch (e) {}
+            themeToggle.setAttribute('aria-label', next === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+        });
+    }
 
     // Mobile menu
     if (mobileToggle && navLinksEl) {
@@ -139,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function loadInitialImages() {
         showLoading();
         galleryGrid.innerHTML = '';
-        config.visibleImages = getFilteredImages();
+        config.visibleImages = config.allImages;
         loadImageBatch(config.visibleImages);
     }
 
@@ -156,7 +171,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function createGalleryItem(imageData) {
         const galleryItem = document.createElement('div');
         galleryItem.className = 'gallery-item';
-        galleryItem.setAttribute('data-category', imageData.category);
 
         const imgIndex = config.allImages.indexOf(imageData);
 
@@ -165,11 +179,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="image-placeholder" data-src="${imageData.src}" data-alt="${imageData.title}">
                     <div class="placeholder-content">Loading...</div>
                 </div>
-                <div class="image-overlay">
-                    <div class="image-info">
-                        <h3></h3>
-                    </div>
-                </div>
+                <span class="image-caption">${imageData.title}</span>
             </div>
         `;
 
@@ -184,31 +194,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         galleryGrid.appendChild(galleryItem);
         lazyLoadImage(galleryItem.querySelector('.image-placeholder'));
-        addTypingCaption(container, imageData.title);
-    }
-
-    // --- Typing caption on hover ---
-    function addTypingCaption(container, title) {
-        const titleEl = container.querySelector('.image-info h3');
-        let timer = null;
-
-        container.addEventListener('mouseenter', () => {
-            clearInterval(timer);
-            titleEl.textContent = '';
-            let i = 0;
-            timer = setInterval(() => {
-                if (i < title.length) {
-                    titleEl.textContent += title[i++];
-                } else {
-                    clearInterval(timer);
-                }
-            }, 35);
-        });
-
-        container.addEventListener('mouseleave', () => {
-            clearInterval(timer);
-            titleEl.textContent = title; // restore instantly on leave
-        });
     }
 
     // Genuinely lazy: the <img> carries loading="lazy" and sits in the DOM
@@ -292,12 +277,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }, { passive: true });
         update();
-    }
-
-    function getFilteredImages() {
-        return config.currentFilter === 'all'
-            ? config.allImages
-            : config.allImages.filter(img => img.category === config.currentFilter);
     }
 
     function showLoading() {
