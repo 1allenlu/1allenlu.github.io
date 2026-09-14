@@ -1,5 +1,7 @@
 // Gallery JavaScript — all features
 document.addEventListener('DOMContentLoaded', function () {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     // Config
     const config = {
         currentImageIndex: 0,
@@ -10,24 +12,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Photo data
     const photoData = [
-        { src: 'assets/gallery/photo1.jpg',  category: 'all', title: 'Photo 1',  description: 'Photography' },
-        { src: 'assets/gallery/photo2.jpg',  category: 'all', title: 'Photo 2',  description: 'Photography' },
-        { src: 'assets/gallery/photo3.jpg',  category: 'all', title: 'Photo 3',  description: 'Photography' },
-        { src: 'assets/gallery/photo4.jpg',  category: 'all', title: 'Photo 4',  description: 'Photography' },
-        { src: 'assets/gallery/photo5.jpg',  category: 'all', title: 'Photo 5',  description: 'Photography' },
-        { src: 'assets/gallery/photo6.jpg',  category: 'all', title: 'Photo 6',  description: 'Photography' },
-        { src: 'assets/gallery/photo7.jpg',  category: 'all', title: 'Photo 7',  description: 'Photography' },
-        { src: 'assets/gallery/photo8.jpg',  category: 'all', title: 'Photo 8',  description: 'Photography' },
-        { src: 'assets/gallery/photo9.jpg',  category: 'all', title: 'Photo 9',  description: 'Photography' },
-        { src: 'assets/gallery/photo10.jpg', category: 'all', title: 'Photo 10', description: 'Photography' },
-        { src: 'assets/gallery/photo11.jpg', category: 'all', title: 'Photo 11', description: 'Photography' },
-        { src: 'assets/gallery/photo12.jpg', category: 'all', title: 'Photo 12', description: 'Photography' },
-        { src: 'assets/gallery/photo13.jpg', category: 'all', title: 'Photo 13', description: 'Photography' },
-        { src: 'assets/gallery/photo14.jpg', category: 'all', title: 'Photo 14', description: 'Photography' },
-        { src: 'assets/gallery/photo15.jpg', category: 'all', title: 'Photo 15', description: 'Photography' },
-        { src: 'assets/gallery/photo16.jpg', category: 'all', title: 'Photo 16', description: 'Photography' },
-        { src: 'assets/gallery/photo17.jpg', category: 'all', title: 'Photo 17', description: 'Photography' },
-        { src: 'assets/gallery/photo18.jpg', category: 'all', title: 'Photo 18', description: 'Photography' },
+        { src: 'assets/gallery/photo1.jpg',  category: 'all', title: 'Surfers at Sunset',   description: 'Golden hour on the Pacific.' },
+        { src: 'assets/gallery/photo2.jpg',  category: 'all', title: 'Night Drive',          description: 'A JDM sedan under neon.' },
+        { src: 'assets/gallery/photo3.jpg',  category: 'all', title: 'Coastal Sunset',       description: 'Sun meets the horizon.' },
+        { src: 'assets/gallery/photo4.jpg',  category: 'all', title: 'Harbor at Dusk',       description: 'Boats drifting home for the night.' },
+        { src: 'assets/gallery/photo5.jpg',  category: 'all', title: 'Airborne',             description: 'Catching air on a late afternoon.' },
+        { src: 'assets/gallery/photo6.jpg',  category: 'all', title: 'Clipper City',         description: 'A tall ship crossing the harbor.' },
+        { src: 'assets/gallery/photo7.jpg',  category: 'all', title: 'Turret & Sky',         description: "Old Quebec's rooftops." },
+        { src: 'assets/gallery/photo8.jpg',  category: 'all', title: 'Snow Day',             description: 'Old Quebec under fresh snow.' },
+        { src: 'assets/gallery/photo9.jpg',  category: 'all', title: 'Chateau Frontenac',    description: "Quebec City's landmark hotel." },
+        { src: 'assets/gallery/photo10.jpg', category: 'all', title: 'Cherry Blossoms',      description: 'The Jefferson Memorial in bloom.' },
+        { src: 'assets/gallery/photo11.jpg', category: 'all', title: 'Fuji Through the Wires', description: 'Mount Fuji on a hazy morning.' },
+        { src: 'assets/gallery/photo12.jpg', category: 'all', title: 'Blossoms & Friends',   description: 'A huddle under the cherry trees.' },
+        { src: 'assets/gallery/photo13.jpg', category: 'all', title: 'Coastal Drive',        description: 'A 911 along the shoreline.' },
+        { src: 'assets/gallery/photo14.jpg', category: 'all', title: 'Low Tide',             description: 'Long shadows on the sand.' },
+        { src: 'assets/gallery/photo15.jpg', category: 'all', title: 'Rooftops to the Sea',  description: 'A hillside view over the coast.' },
+        { src: 'assets/gallery/photo16.jpg', category: 'all', title: 'In Primer',           description: 'Fuselages waiting for paint.' },
+        { src: 'assets/gallery/photo17.jpg', category: 'all', title: 'Niagara in Winter',    description: 'Horseshoe Falls, frozen at the edges.' },
+        { src: 'assets/gallery/photo18.jpg', category: 'all', title: 'Fallsview',            description: "Niagara's skyline under snow." },
     ];
 
     // Fisher-Yates shuffle for random layout on each reload
@@ -52,8 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const lightboxClose    = document.querySelector('.lightbox-close');
     const lightboxPrev     = document.getElementById('lightboxPrev');
     const lightboxNext     = document.getElementById('lightboxNext');
-    const scrollProgress   = document.getElementById('scrollProgress');
-    const scrollToTopBtn   = document.getElementById('scrollToTop');
+    const header           = document.querySelector('header');
     const mobileToggle     = document.getElementById('mobileMenuToggle');
     const navLinksEl       = document.querySelector('.nav-links');
     const slideshowBtn     = document.getElementById('slideshowBtn');
@@ -62,29 +63,32 @@ document.addEventListener('DOMContentLoaded', function () {
     const keyboardHint     = document.getElementById('keyboardHint');
     const galleryFeatured  = document.getElementById('galleryFeatured');
     const statsCount       = document.getElementById('statsCount');
-    const featuredCount    = document.getElementById('featuredCount');
 
-    // Scroll progress + scroll-to-top
+    // Nav goes translucent + blurred once the page scrolls past the photo
+    // hero (not just a few pixels in) so its white-on-photo text has room.
+    // The hero's height is cached (it doesn't change on scroll) and only
+    // recomputed on resize, and the toggle itself is rAF-throttled.
+    let heroThreshold = galleryFeatured ? Math.max(galleryFeatured.offsetHeight - 90, 20) : 20;
+    window.addEventListener('resize', () => {
+        heroThreshold = galleryFeatured ? Math.max(galleryFeatured.offsetHeight - 90, 20) : 20;
+    }, { passive: true });
+
+    let headerTicking = false;
     window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        if (scrollProgress) {
-            scrollProgress.style.width = docHeight > 0 ? (scrollTop / docHeight) * 100 + '%' : '0%';
-        }
-        if (scrollToTopBtn) {
-            scrollToTopBtn.classList.toggle('visible', scrollTop > 400);
-        }
-    });
-
-    if (scrollToTopBtn) {
-        scrollToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    }
+        if (headerTicking) return;
+        headerTicking = true;
+        requestAnimationFrame(() => {
+            if (header) header.classList.toggle('scrolled', window.scrollY > heroThreshold);
+            headerTicking = false;
+        });
+    }, { passive: true });
 
     // Mobile menu
     if (mobileToggle && navLinksEl) {
         mobileToggle.addEventListener('click', () => {
-            navLinksEl.classList.toggle('mobile-open');
-            mobileToggle.classList.toggle('active');
+            const isOpen = navLinksEl.classList.toggle('mobile-open');
+            mobileToggle.classList.toggle('active', isOpen);
+            mobileToggle.setAttribute('aria-expanded', String(isOpen));
         });
     }
 
@@ -101,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
         lightboxClose.addEventListener('click', closeLightbox);
         lightboxPrev.addEventListener('click', () => { stopSlideshow(); showPreviousImage(); });
         lightboxNext.addEventListener('click', () => { stopSlideshow(); showNextImage(); });
+        trapFocus(lightbox);
 
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) closeLightbox();
@@ -142,6 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
         images.forEach((imageData) => createGalleryItem(imageData));
         hideLoading();
         animateGalleryItems();
+        setupParallax();
         buildFilmstrip();
         setFeaturedPhoto();
         if (statsCount) statsCount.textContent = `${config.allImages.length} Photos`;
@@ -153,26 +159,32 @@ document.addEventListener('DOMContentLoaded', function () {
         galleryItem.setAttribute('data-category', imageData.category);
 
         const imgIndex = config.allImages.indexOf(imageData);
-        const displayNum = String(imgIndex + 1).padStart(2, '0');
 
         galleryItem.innerHTML = `
-            <div class="image-container" onclick="openLightbox(${imgIndex}, this)">
+            <div class="image-container" tabindex="0" role="button" aria-label="View ${imageData.title}">
                 <div class="image-placeholder" data-src="${imageData.src}" data-alt="${imageData.title}">
                     <div class="placeholder-content">Loading...</div>
                 </div>
-                <span class="image-count-badge">${displayNum}</span>
                 <div class="image-overlay">
                     <div class="image-info">
                         <h3></h3>
-                        <p>${imageData.description}</p>
                     </div>
                 </div>
             </div>
         `;
 
+        const container = galleryItem.querySelector('.image-container');
+        container.addEventListener('click', () => openLightbox(imgIndex, container));
+        container.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openLightbox(imgIndex, container);
+            }
+        });
+
         galleryGrid.appendChild(galleryItem);
         lazyLoadImage(galleryItem.querySelector('.image-placeholder'));
-        addTypingCaption(galleryItem.querySelector('.image-container'), imageData.title);
+        addTypingCaption(container, imageData.title);
     }
 
     // --- Typing caption on hover ---
@@ -199,16 +211,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Genuinely lazy: the <img> carries loading="lazy" and sits in the DOM
+    // from the start, so the browser itself defers the network fetch until
+    // the tile is actually near the viewport (a `new Image()` preloaded
+    // up front, as this used to do, downloads all 18 photos on page load
+    // regardless of scroll position).
     function lazyLoadImage(placeholder) {
         const src = placeholder.getAttribute('data-src');
         const alt = placeholder.getAttribute('data-alt');
-        const img = new Image();
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.alt = alt;
+        img.style.opacity = '0';
 
         img.onload = function () {
-            placeholder.innerHTML = '';
             placeholder.classList.add('loaded');
-            img.style.opacity = '0';
-            placeholder.appendChild(img);
             requestAnimationFrame(() => { img.style.opacity = '1'; });
         };
 
@@ -216,14 +233,65 @@ document.addEventListener('DOMContentLoaded', function () {
             placeholder.innerHTML = '<div class="placeholder-content" style="color:#aaa">No image</div>';
         };
 
+        placeholder.innerHTML = '';
+        placeholder.appendChild(img);
         img.src = src;
-        img.alt = alt;
     }
 
+    // Items reveal as they actually scroll into view, rather than all at once
+    // right after load: most of the grid sits below the fold on first paint.
     function animateGalleryItems() {
+        galleryGrid.classList.add('loaded');
         const items = galleryGrid.querySelectorAll('.gallery-item:not(.visible)');
-        items.forEach((item, i) => setTimeout(() => item.classList.add('visible'), i * 80));
-        setTimeout(() => galleryGrid.classList.add('loaded'), 80);
+
+        if (reduceMotion || !('IntersectionObserver' in window)) {
+            items.forEach(item => item.classList.add('visible'));
+            return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+        items.forEach(item => observer.observe(item));
+    }
+
+    // A gentle, alternating drift on the grid images as the page scrolls:
+    // each image moves at a slightly different rate, via a CSS variable so
+    // it composes with (rather than fights) the hover-scale transform.
+    function setupParallax() {
+        if (reduceMotion) return;
+        const containers = Array.from(galleryGrid.querySelectorAll('.image-container'));
+        if (!containers.length) return;
+
+        const speeds = [0.05, -0.06, 0.035, -0.04, 0.055, -0.03];
+        containers.forEach((el, i) => { el.dataset.speed = speeds[i % speeds.length]; });
+
+        let ticking = false;
+        function update() {
+            const viewportCenter = window.innerHeight / 2;
+            containers.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.bottom < -200 || rect.top > window.innerHeight + 200) return;
+                const speed = parseFloat(el.dataset.speed || 0);
+                const offset = (viewportCenter - (rect.top + rect.height / 2)) * speed;
+                el.style.setProperty('--py', `${offset.toFixed(1)}px`);
+            });
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(update);
+                ticking = true;
+            }
+        }, { passive: true });
+        update();
     }
 
     function getFilteredImages() {
@@ -241,23 +309,26 @@ document.addEventListener('DOMContentLoaded', function () {
         loadingIndicator.classList.add('hidden');
     }
 
-    // --- Featured photo banner ---
+    // --- Hero background photo (the hero section doubles as the featured photo) ---
     function setFeaturedPhoto() {
         if (!galleryFeatured || config.allImages.length === 0) return;
         const featured = config.allImages[0];
 
-        // Insert an img for proper hover zoom
-        galleryFeatured.innerHTML = `
-            <img class="gallery-featured-inner-img" src="${featured.src}" alt="${featured.title}">
-            <div class="gallery-featured-overlay">
-                <span class="featured-tag">Featured</span>
-                <p class="featured-count">${config.allImages.length} photos in this collection</p>
-            </div>
-        `;
+        const bg = new Image();
+        bg.className = 'gallery-hero-bg';
+        bg.alt = '';
+        bg.onload = () => bg.classList.add('loaded');
+        bg.src = featured.src;
+        galleryFeatured.prepend(bg);
 
-        // Click featured opens its lightbox
-        galleryFeatured.style.cursor = 'pointer';
+        // Clicking (or Enter/Space) the hero opens the lightbox on its featured photo
         galleryFeatured.addEventListener('click', () => openLightbox(0, null));
+        galleryFeatured.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openLightbox(0, null);
+            }
+        });
     }
 
     // --- Filmstrip ---
@@ -265,15 +336,26 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!filmstripEl) return;
         filmstripEl.innerHTML = '';
         config.allImages.forEach((imgData, i) => {
-            const thumb = document.createElement('img');
-            thumb.src = imgData.src;
-            thumb.alt = imgData.title;
-            thumb.className = 'filmstrip-thumb';
-            thumb.addEventListener('click', (e) => {
+            const selectThumb = (e) => {
                 e.stopPropagation();
                 config.currentImageIndex = i;
                 updateLightboxContent(true);
                 updateFilmstrip();
+            };
+
+            const thumb = document.createElement('img');
+            thumb.src = imgData.src;
+            thumb.alt = imgData.title;
+            thumb.className = 'filmstrip-thumb';
+            thumb.tabIndex = 0;
+            thumb.setAttribute('role', 'button');
+            thumb.setAttribute('aria-label', `View ${imgData.title}`);
+            thumb.addEventListener('click', selectThumb);
+            thumb.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    selectThumb(e);
+                }
             });
             filmstripEl.appendChild(thumb);
         });
@@ -298,7 +380,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function startSlideshow() {
         slideshowActive = true;
-        if (slideshowBtn) slideshowBtn.innerHTML = '&#9646;&#9646;'; // pause icon
+        if (slideshowBtn) {
+            slideshowBtn.innerHTML = '&#9646;&#9646;'; // pause icon
+            slideshowBtn.setAttribute('aria-label', 'Pause slideshow');
+        }
         animateSlideshowProgress();
         slideshowTimer = setInterval(() => {
             showNextImage();
@@ -310,7 +395,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!slideshowActive) return;
         slideshowActive = false;
         clearInterval(slideshowTimer);
-        if (slideshowBtn) slideshowBtn.innerHTML = '&#9654;'; // play icon
+        if (slideshowBtn) {
+            slideshowBtn.innerHTML = '&#9654;'; // play icon
+            slideshowBtn.setAttribute('aria-label', 'Play slideshow');
+        }
         if (slideshowFill) {
             slideshowFill.style.transition = 'none';
             slideshowFill.style.width = '0%';
@@ -338,25 +426,35 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Lightbox focus trap ---
+    // Attached once (not on every open, which used to stack a fresh listener
+    // per photo and never clean any of them up) — recomputes the focusable
+    // set on each Tab press since the filmstrip's thumbnails change per image.
     function trapFocus(el) {
-        const focusable = el.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
-        const first = focusable[0];
-        const last  = focusable[focusable.length - 1];
-        el.addEventListener('keydown', function onTab(e) {
-            if (e.key !== 'Tab') return;
+        el.addEventListener('keydown', (e) => {
+            if (e.key !== 'Tab' || !lightbox.classList.contains('active')) return;
+            const focusable = el.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+            const first = focusable[0];
+            const last  = focusable[focusable.length - 1];
             if (e.shiftKey) {
                 if (document.activeElement === first) { e.preventDefault(); last.focus(); }
             } else {
                 if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
             }
-            if (!lightbox.classList.contains('active')) el.removeEventListener('keydown', onTab);
         });
     }
 
     let lastFocusedElement = null;
+    let fadeTimeoutId = null;
+    let closeTimeoutId = null;
 
     // --- Lightbox: zoom-from-position open ---
     window.openLightbox = function (imageIndex, sourceEl) {
+        // Cancel any in-flight close from a moment ago so reopening never
+        // races with the previous close's cleanup (stale timers resetting
+        // state out from under the newly-opened image).
+        clearTimeout(closeTimeoutId);
+        lightboxContent.style.transition = '';
+
         lastFocusedElement = document.activeElement;
         config.currentImageIndex = imageIndex;
         updateLightboxContent(false);
@@ -394,19 +492,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
         showKeyboardHint();
         updateFilmstrip();
-        setTimeout(() => { lightboxClose.focus(); trapFocus(lightbox); }, 60);
+        setTimeout(() => { lightboxClose.focus(); }, 60);
     };
 
     function updateLightboxContent(animate) {
         const imageData = config.allImages[config.currentImageIndex];
+        clearTimeout(fadeTimeoutId);
 
         if (animate) {
             lightboxImage.classList.add('fading');
-            setTimeout(() => {
+            fadeTimeoutId = setTimeout(() => {
                 lightboxImage.src = imageData.src;
                 lightboxImage.alt = imageData.title;
                 lightboxImage.classList.remove('fading');
-            }, 180);
+            }, 260);
         } else {
             lightboxImage.src = imageData.src;
             lightboxImage.alt = imageData.title;
@@ -418,15 +517,23 @@ document.addEventListener('DOMContentLoaded', function () {
         updateFilmstrip();
     }
 
+    // Closing is idempotent: a second Escape/click while it's already
+    // closing (or mid-close-then-reopen) can't leave the modal half-visible
+    // or the body permanently scroll-locked.
     function closeLightbox() {
+        if (!lightbox.classList.contains('active')) return;
+
         stopSlideshow();
+        clearTimeout(fadeTimeoutId);
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+
         lightboxContent.style.transition = 'transform 0.3s ease, opacity 0.25s ease';
         lightboxContent.style.transform  = 'scale(0.9)';
         lightboxContent.style.opacity    = '0';
 
-        setTimeout(() => {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto';
+        clearTimeout(closeTimeoutId);
+        closeTimeoutId = setTimeout(() => {
             lightboxContent.style.transform  = '';
             lightboxContent.style.opacity    = '';
             lightboxContent.style.transition = '';

@@ -4,20 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Gallery - Allen Lu</title>
-    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Gallery · Allen Lu</title>
+    <meta name="description" content="A photo gallery by Allen Lu, with moments from NYC and beyond.">
+    <link rel="icon" type="image/svg+xml" href="assets/homepage/favicon.svg">
+    <link rel="alternate icon" href="assets/homepage/favicon.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="tokens.css">
     <link rel="stylesheet" href="gallery.css">
 </head>
 
-<body>
-    <!-- Scroll Progress Bar -->
-    <div class="scroll-progress" id="scrollProgress"></div>
-
+<body class="gallery-page">
     <!-- Header -->
     <header>
         <nav class="container">
@@ -25,26 +25,27 @@
             <ul class="nav-links">
                 <li><a href="index.html#about">About</a></li>
                 <li><a href="index.html#education">Education</a></li>
-                <li><a href="index.html#experience">Experiences</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
                 <li><a href="index.html#skills">Skills</a></li>
                 <li><a href="index.html#projects">Projects</a></li>
-                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="gallery.html" class="nav-active">Gallery</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
-            <div class="mobile-menu-toggle" id="mobileMenuToggle">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </nav>
     </header>
 
     <main>
-        <!-- Hero Section -->
-        <section class="gallery-hero">
-            <div class="container">
-                <h1>Photo Gallery</h1>
-                <p>Capturing moments through my lens</p>
+        <!-- Hero Section: doubles as the featured photo, full-bleed like a product page hero -->
+        <section class="gallery-hero" id="galleryFeatured" tabindex="0" role="button" aria-label="View featured photo">
+            <div class="gallery-hero-overlay"></div>
+            <div class="container gallery-hero-content">
+                <h1>Gallery</h1>
+                <p>Moments, captured.</p>
                 <!-- Stats strip -->
                 <div class="gallery-stats">
                     <span id="statsCount">18 Photos</span>
@@ -55,14 +56,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Featured Photo Banner -->
-        <div class="gallery-featured" id="galleryFeatured">
-            <div class="gallery-featured-overlay">
-                <span class="featured-tag">Featured</span>
-                <p class="featured-count" id="featuredCount">Loading collection...</p>
-            </div>
-        </div>
 
         <!-- Gallery Grid -->
         <section class="gallery-section">
@@ -81,7 +74,7 @@
         <!-- Lightbox Modal -->
         <div class="lightbox" id="lightbox">
             <div class="lightbox-content">
-                <span class="lightbox-close">&times;</span>
+                <button type="button" class="lightbox-close" aria-label="Close">&times;</button>
                 <img class="lightbox-image" id="lightboxImage" src="" alt="">
                 <div class="lightbox-info">
                     <h3 id="lightboxTitle"></h3>
@@ -111,14 +104,6 @@
             <kbd>&#8592;</kbd> <kbd>&#8594;</kbd> navigate &nbsp;&middot;&nbsp; <kbd>Esc</kbd> close
         </div>
     </main>
-
-    <!-- Back to Portfolio Button -->
-    <div class="back-to-portfolio">
-        <a href="index.html" class="btn btn-primary">&#8592; Back to Portfolio</a>
-    </div>
-
-    <!-- Scroll to Top -->
-    <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">&#8679;</button>
 
     <script src="gallery.js"></script>
 </body>

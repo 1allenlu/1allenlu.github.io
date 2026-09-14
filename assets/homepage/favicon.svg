@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="grad" x1="14" y1="14" x2="50" y2="50" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6EB6E8"/>
+      <stop offset="1" stop-color="#2E5984"/>
+    </linearGradient>
+    <filter id="aura" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="3.2"/>
+    </filter>
+  </defs>
+  <path d="M32 14 L15 50 M32 14 L49 50 M21.5 40 H42.5"
+        fill="none" stroke="url(#grad)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"
+        opacity="0.55" filter="url(#aura)"/>
+  <path d="M32 14 L15 50 M32 14 L49 50 M21.5 40 H42.5"
+        fill="none" stroke="url(#grad)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
