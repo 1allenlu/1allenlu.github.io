@@ -1076,6 +1076,16 @@ footer {
         text-align: left;
     }
 
+    .education-content .timeline-card-head {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .education-content .timeline-card p {
+        margin: 0 auto;
+    }
+
     .fun-facts {
         justify-content: center;
     }
