@@ -1,4 +1,4 @@
-// Gallery JavaScript — all features
+// Gallery JavaScript: all features
 document.addEventListener('DOMContentLoaded', function () {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -9,26 +9,29 @@ document.addEventListener('DOMContentLoaded', function () {
         visibleImages: []
     };
 
-    // Photo data
+    // The grid and filmstrip use smaller copies; the viewer and hero use the full photo.
+    const thumbFor = (src) => src.replace('assets/gallery/', 'assets/gallery/thumbs/');
+
+    // Photo data (width/height let each tile reserve its space before the photo loads)
     const photoData = [
-        { src: 'assets/gallery/photo1.jpg',  title: 'Surfers at Sunset',   description: 'Golden hour on the Pacific.' },
-        { src: 'assets/gallery/photo2.jpg',  title: 'Night Drive',          description: 'A JDM sedan under neon.' },
-        { src: 'assets/gallery/photo3.jpg',  title: 'Coastal Sunset',       description: 'Sun meets the horizon.' },
-        { src: 'assets/gallery/photo4.jpg',  title: 'Harbor at Dusk',       description: 'Boats drifting home for the night.' },
-        { src: 'assets/gallery/photo5.jpg',  title: 'Airborne',             description: 'Catching air on a late afternoon.' },
-        { src: 'assets/gallery/photo6.jpg',  title: 'Clipper City',         description: 'A tall ship crossing the harbor.' },
-        { src: 'assets/gallery/photo7.jpg',  title: 'Turret & Sky',         description: "Old Quebec's rooftops." },
-        { src: 'assets/gallery/photo8.jpg',  title: 'Snow Day',             description: 'Old Quebec under fresh snow.' },
-        { src: 'assets/gallery/photo9.jpg',  title: 'Chateau Frontenac',    description: "Quebec City's landmark hotel." },
-        { src: 'assets/gallery/photo10.jpg', title: 'Cherry Blossoms',      description: 'The Jefferson Memorial in bloom.' },
-        { src: 'assets/gallery/photo11.jpg', title: 'Fuji Through the Wires', description: 'Mount Fuji on a hazy morning.' },
-        { src: 'assets/gallery/photo12.jpg', title: 'Blossoms & Friends',   description: 'A huddle under the cherry trees.' },
-        { src: 'assets/gallery/photo13.jpg', title: 'Coastal Drive',        description: 'A 911 along the shoreline.' },
-        { src: 'assets/gallery/photo14.jpg', title: 'Low Tide',             description: 'Long shadows on the sand.' },
-        { src: 'assets/gallery/photo15.jpg', title: 'Rooftops to the Sea',  description: 'A hillside view over the coast.' },
-        { src: 'assets/gallery/photo16.jpg', title: 'In Primer',           description: 'Fuselages waiting for paint.' },
-        { src: 'assets/gallery/photo17.jpg', title: 'Niagara in Winter',    description: 'Horseshoe Falls, frozen at the edges.' },
-        { src: 'assets/gallery/photo18.jpg', title: 'Fallsview',            description: "Niagara's skyline under snow." },
+        { src: 'assets/gallery/photo1.jpg',  title: 'Surfers at Sunset',   description: 'Golden hour on the Pacific.', width: 1010, height: 1800 },
+        { src: 'assets/gallery/photo2.jpg',  title: 'Night Drive',          description: 'A JDM sedan under neon.', width: 1800, height: 1010 },
+        { src: 'assets/gallery/photo3.jpg',  title: 'Coastal Sunset',       description: 'Sun meets the horizon.', width: 1010, height: 1800 },
+        { src: 'assets/gallery/photo4.jpg',  title: 'Harbor at Dusk',       description: 'Boats drifting home for the night.', width: 1800, height: 1010 },
+        { src: 'assets/gallery/photo5.jpg',  title: 'Airborne',             description: 'Catching air on a late afternoon.', width: 1010, height: 1800 },
+        { src: 'assets/gallery/photo6.jpg',  title: 'Clipper City',         description: 'A tall ship crossing the harbor.', width: 1800, height: 1082 },
+        { src: 'assets/gallery/photo7.jpg',  title: 'Turret & Sky',         description: "Old Quebec's rooftops.", width: 1800, height: 1200 },
+        { src: 'assets/gallery/photo8.jpg',  title: 'Snow Day',             description: 'Old Quebec under fresh snow.', width: 1800, height: 1200 },
+        { src: 'assets/gallery/photo9.jpg',  title: 'Chateau Frontenac',    description: "Quebec City's landmark hotel.", width: 1800, height: 1200 },
+        { src: 'assets/gallery/photo10.jpg', title: 'Cherry Blossoms',      description: 'The Jefferson Memorial in bloom.', width: 1800, height: 1149 },
+        { src: 'assets/gallery/photo11.jpg', title: 'Fuji Through the Wires', description: 'Mount Fuji on a hazy morning.', width: 1199, height: 1800 },
+        { src: 'assets/gallery/photo12.jpg', title: 'Blossoms & Friends',   description: 'A huddle under the cherry trees.', width: 1800, height: 1200 },
+        { src: 'assets/gallery/photo13.jpg', title: 'Coastal Drive',        description: 'A 911 along the shoreline.', width: 1199, height: 1800 },
+        { src: 'assets/gallery/photo14.jpg', title: 'Low Tide',             description: 'Long shadows on the sand.', width: 1800, height: 1199 },
+        { src: 'assets/gallery/photo15.jpg', title: 'Rooftops to the Sea',  description: 'A hillside view over the coast.', width: 1251, height: 1800 },
+        { src: 'assets/gallery/photo16.jpg', title: 'In Primer',           description: 'Fuselages waiting for paint.', width: 1200, height: 1800 },
+        { src: 'assets/gallery/photo17.jpg', title: 'Niagara in Winter',    description: 'Horseshoe Falls, frozen at the edges.', width: 1200, height: 1800 },
+        { src: 'assets/gallery/photo18.jpg', title: 'Fallsview',            description: "Niagara's skyline under snow.", width: 1200, height: 1800 },
     ];
 
     // Fisher-Yates shuffle for random layout on each reload
@@ -63,21 +66,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const galleryFeatured  = document.getElementById('galleryFeatured');
     const statsCount       = document.getElementById('statsCount');
 
-    // Nav goes translucent + blurred once the page scrolls past the photo
-    // hero (not just a few pixels in) so its white-on-photo text has room.
-    // The hero's height is cached (it doesn't change on scroll) and only
-    // recomputed on resize, and the toggle itself is rAF-throttled.
-    let heroThreshold = galleryFeatured ? Math.max(galleryFeatured.offsetHeight - 90, 20) : 20;
-    window.addEventListener('resize', () => {
-        heroThreshold = galleryFeatured ? Math.max(galleryFeatured.offsetHeight - 90, 20) : 20;
-    }, { passive: true });
-
+    // Nav goes translucent + blurred once the page scrolls, like the homepage.
     let headerTicking = false;
     window.addEventListener('scroll', () => {
         if (headerTicking) return;
         headerTicking = true;
         requestAnimationFrame(() => {
-            if (header) header.classList.toggle('scrolled', window.scrollY > heroThreshold);
+            if (header) header.classList.toggle('scrolled', window.scrollY > 20);
             headerTicking = false;
         });
     }, { passive: true });
@@ -106,6 +101,15 @@ document.addEventListener('DOMContentLoaded', function () {
             mobileToggle.setAttribute('aria-expanded', String(isOpen));
         });
     }
+
+    // Cursor-tracking glow on every .glow-card (the same effect as the homepage cards)
+    document.addEventListener('pointermove', (e) => {
+        const card = e.target instanceof Element ? e.target.closest('.glow-card') : null;
+        if (!card) return;
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--glow-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--glow-y', `${e.clientY - rect.top}px`);
+    }, { passive: true });
 
     // Initialize
     init();
@@ -159,10 +163,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function loadImageBatch(images) {
-        images.forEach((imageData) => createGalleryItem(imageData));
+        // The first photo is featured in the hero, so the grid starts from the second.
+        images.slice(1).forEach((imageData) => createGalleryItem(imageData));
         hideLoading();
         animateGalleryItems();
-        setupParallax();
         buildFilmstrip();
         setFeaturedPhoto();
         if (statsCount) statsCount.textContent = `${config.allImages.length} Photos`;
@@ -175,10 +179,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const imgIndex = config.allImages.indexOf(imageData);
 
         galleryItem.innerHTML = `
-            <div class="image-container" tabindex="0" role="button" aria-label="View ${imageData.title}">
-                <div class="image-placeholder" data-src="${imageData.src}" data-alt="${imageData.title}">
-                    <div class="placeholder-content">Loading...</div>
-                </div>
+            <div class="image-container glow-card" tabindex="0" role="button" aria-label="View ${imageData.title}">
+                <div class="image-placeholder" style="aspect-ratio: ${imageData.width} / ${imageData.height}" data-src="${thumbFor(imageData.src)}" data-alt="${imageData.title}"></div>
                 <span class="image-caption">${imageData.title}</span>
             </div>
         `;
@@ -206,19 +208,19 @@ document.addEventListener('DOMContentLoaded', function () {
         const alt = placeholder.getAttribute('data-alt');
         const img = document.createElement('img');
         img.loading = 'lazy';
+        img.decoding = 'async';
         img.alt = alt;
         img.style.opacity = '0';
 
+        // Fade in only once it's decoded, so the fade itself never stutters
         img.onload = function () {
-            placeholder.classList.add('loaded');
-            requestAnimationFrame(() => { img.style.opacity = '1'; });
+            img.decode().catch(() => {}).then(() => { img.style.opacity = '1'; });
         };
 
         img.onerror = function () {
             placeholder.innerHTML = '<div class="placeholder-content" style="color:#aaa">No image</div>';
         };
 
-        placeholder.innerHTML = '';
         placeholder.appendChild(img);
         img.src = src;
     }
@@ -234,49 +236,18 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
+        // Items entering together stagger as a group, like the homepage cards
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
+            entries
+                .filter(entry => entry.isIntersecting)
+                .forEach((entry, i) => {
+                    entry.target.style.transitionDelay = `${Math.min(i, 6) * 70}ms`;
                     entry.target.classList.add('visible');
                     observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+                });
+        }, { rootMargin: '0px 0px -8% 0px' });
 
         items.forEach(item => observer.observe(item));
-    }
-
-    // A gentle, alternating drift on the grid images as the page scrolls:
-    // each image moves at a slightly different rate, via a CSS variable so
-    // it composes with (rather than fights) the hover-scale transform.
-    function setupParallax() {
-        if (reduceMotion) return;
-        const containers = Array.from(galleryGrid.querySelectorAll('.image-container'));
-        if (!containers.length) return;
-
-        const speeds = [0.05, -0.06, 0.035, -0.04, 0.055, -0.03];
-        containers.forEach((el, i) => { el.dataset.speed = speeds[i % speeds.length]; });
-
-        let ticking = false;
-        function update() {
-            const viewportCenter = window.innerHeight / 2;
-            containers.forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (rect.bottom < -200 || rect.top > window.innerHeight + 200) return;
-                const speed = parseFloat(el.dataset.speed || 0);
-                const offset = (viewportCenter - (rect.top + rect.height / 2)) * speed;
-                el.style.setProperty('--py', `${offset.toFixed(1)}px`);
-            });
-            ticking = false;
-        }
-
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(update);
-                ticking = true;
-            }
-        }, { passive: true });
-        update();
     }
 
     function showLoading() {
@@ -296,9 +267,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const bg = new Image();
         bg.className = 'gallery-hero-bg';
         bg.alt = '';
-        bg.onload = () => bg.classList.add('loaded');
+        bg.fetchPriority = 'high';
+        bg.onload = () => bg.decode().catch(() => {}).then(() => bg.classList.add('loaded'));
         bg.src = featured.src;
         galleryFeatured.prepend(bg);
+
+        // The slow drift only needs to run while the hero is on screen
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(([entry]) => {
+                bg.classList.toggle('paused', !entry.isIntersecting);
+            }).observe(galleryFeatured);
+        }
 
         // Clicking (or Enter/Space) the hero opens the lightbox on its featured photo
         galleryFeatured.addEventListener('click', () => openLightbox(0, null));
@@ -323,7 +302,9 @@ document.addEventListener('DOMContentLoaded', function () {
             };
 
             const thumb = document.createElement('img');
-            thumb.src = imgData.src;
+            thumb.src = thumbFor(imgData.src);
+            thumb.loading = 'lazy';
+            thumb.decoding = 'async';
             thumb.alt = imgData.title;
             thumb.className = 'filmstrip-thumb';
             thumb.tabIndex = 0;
@@ -406,7 +387,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Lightbox focus trap ---
     // Attached once (not on every open, which used to stack a fresh listener
-    // per photo and never clean any of them up) — recomputes the focusable
+    // per photo and never clean any of them up): recomputes the focusable
     // set on each Tab press since the filmstrip's thumbnails change per image.
     function trapFocus(el) {
         el.addEventListener('keydown', (e) => {
@@ -474,17 +455,30 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(() => { lightboxClose.focus(); }, 60);
     };
 
+    let swapToken = 0;
+
+    function preloadPhoto(src) {
+        const photo = new Image();
+        photo.src = src;
+        return photo.decode().catch(() => {});
+    }
+
     function updateLightboxContent(animate) {
         const imageData = config.allImages[config.currentImageIndex];
+        const token = ++swapToken;
         clearTimeout(fadeTimeoutId);
 
         if (animate) {
+            // Swap only after the fade-out ends and the next photo is decoded,
+            // so it never flashes blank or pops in half-loaded.
             lightboxImage.classList.add('fading');
-            fadeTimeoutId = setTimeout(() => {
+            const faded = new Promise((resolve) => { fadeTimeoutId = setTimeout(resolve, 200); });
+            Promise.all([preloadPhoto(imageData.src), faded]).then(() => {
+                if (token !== swapToken) return;
                 lightboxImage.src = imageData.src;
                 lightboxImage.alt = imageData.title;
                 lightboxImage.classList.remove('fading');
-            }, 260);
+            });
         } else {
             lightboxImage.src = imageData.src;
             lightboxImage.alt = imageData.title;
@@ -494,6 +488,11 @@ document.addEventListener('DOMContentLoaded', function () {
         lightboxCategory.textContent = imageData.description;
         lightboxCounter.textContent  = `${config.currentImageIndex + 1} / ${config.allImages.length}`;
         updateFilmstrip();
+
+        // Have the neighbors ready so next/previous feels instant
+        const count = config.allImages.length;
+        preloadPhoto(config.allImages[(config.currentImageIndex + 1) % count].src);
+        preloadPhoto(config.allImages[(config.currentImageIndex - 1 + count) % count].src);
     }
 
     // Closing is idempotent: a second Escape/click while it's already
@@ -504,6 +503,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         stopSlideshow();
         clearTimeout(fadeTimeoutId);
+        swapToken++;
+        lightboxImage.classList.remove('fading');
         lightbox.classList.remove('active');
         document.body.style.overflow = 'auto';
 

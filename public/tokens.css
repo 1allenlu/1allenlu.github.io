@@ -1,0 +1,75 @@
+/* ==========================================================================
+   Shared design tokens
+   The homepage and gallery.html both load this, so the two pages' theme lives
+   in one place. Palette: paper white #FFFFFF, ink black #050505, and
+   cornflower blue #548CFF as the one accent. Space Mono stays the one
+   typographic quirk (eyebrows, dates, tags).
+   --accent-strong is for small accent text: #548CFF only reaches 3.2:1 on
+   white, so light mode uses a deeper shade of the same blue.
+   ========================================================================== */
+:root {
+    --bg: #FFFFFF;
+    --bg-alt: #FFFFFF;
+    --surface: #F5F6F8;
+    --text: #050505;
+    --text-secondary: #5F6368;
+    --divider: rgba(5, 5, 5, 0.1);
+    --accent: #548CFF;
+    --accent-strong: #2F66DB;
+    --accent-tint: rgba(84, 140, 255, 0.1);
+    --accent-glow: rgba(84, 140, 255, 0.22);
+    --nav-bg: rgba(255, 255, 255, 0.8);
+    --icon-filter: brightness(0);
+
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-sm: 10px;
+
+    --ease: cubic-bezier(0.42, 0, 0.58, 1);
+    --dur-fast: 300ms;
+    --dur-med: 500ms;
+    --dur-slow: 700ms;
+
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg: #050505;
+        --bg-alt: #0B0B0C;
+        --surface: #141416;
+        --text: #FFFFFF;
+        --text-secondary: #A1A1A6;
+        --divider: rgba(255, 255, 255, 0.12);
+        --accent: #548CFF;
+        --accent-strong: #548CFF;
+        --accent-tint: rgba(84, 140, 255, 0.14);
+        --accent-glow: rgba(84, 140, 255, 0.3);
+        --nav-bg: rgba(5, 5, 5, 0.72);
+        --icon-filter: brightness(0) invert(1);
+        color-scheme: dark;
+    }
+}
+
+/* The nav toggle sets data-theme explicitly, which needs to win over the
+   system preference in both directions: the block above only overrides a
+   system light preference toward dark; this one forces dark even when the
+   system itself is set to light. */
+:root[data-theme="dark"] {
+    --bg: #050505;
+    --bg-alt: #0B0B0C;
+    --surface: #141416;
+    --text: #FFFFFF;
+    --text-secondary: #A1A1A6;
+    --divider: rgba(255, 255, 255, 0.12);
+    --accent: #548CFF;
+    --accent-strong: #548CFF;
+    --accent-tint: rgba(84, 140, 255, 0.14);
+    --accent-glow: rgba(84, 140, 255, 0.3);
+    --nav-bg: rgba(5, 5, 5, 0.72);
+    --icon-filter: brightness(0) invert(1);
+    color-scheme: dark;
+}

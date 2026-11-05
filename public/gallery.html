@@ -30,6 +30,8 @@
 </head>
 
 <body class="gallery-page">
+    <canvas class="site-canvas" aria-hidden="true"></canvas>
+
     <!-- Header -->
     <header>
         <nav class="container">
@@ -58,19 +60,23 @@
     </header>
 
     <main>
-        <!-- Hero Section: doubles as the featured photo, full-bleed like a product page hero -->
-        <section class="gallery-hero" id="galleryFeatured" tabindex="0" role="button" aria-label="View featured photo">
-            <div class="gallery-hero-overlay"></div>
-            <div class="container gallery-hero-content">
-                <h1>Gallery</h1>
-                <p>Moments, captured.</p>
-                <!-- Stats strip -->
-                <div class="gallery-stats">
-                    <span id="statsCount">18 Photos</span>
-                    <span class="stat-dot">·</span>
-                    <span>NYC &amp; Beyond</span>
-                    <span class="stat-dot">·</span>
-                    <span>Through My Lens</span>
+        <!-- Hero Section: a rounded tile that doubles as the featured photo -->
+        <section class="gallery-intro">
+            <div class="container">
+                <div class="gallery-hero glow-card" id="galleryFeatured" tabindex="0" role="button" aria-label="View featured photo">
+                    <div class="gallery-hero-overlay"></div>
+                    <div class="gallery-hero-content">
+                        <h1>Gallery</h1>
+                        <p>Moments, captured.</p>
+                        <!-- Stats strip -->
+                        <div class="gallery-stats">
+                            <span id="statsCount">18 Photos</span>
+                            <span class="stat-dot">·</span>
+                            <span>NYC &amp; Beyond</span>
+                            <span class="stat-dot">·</span>
+                            <span>Through My Lens</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -123,6 +129,23 @@
         </div>
     </main>
 
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <a href="index.html" class="footer-logo">Allen Lu</a>
+                <nav class="footer-nav">
+                    <a href="index.html#about">About</a>
+                    <a href="index.html#experience">Experience</a>
+                    <a href="index.html#projects">Projects</a>
+                    <a href="gallery.html">Gallery</a>
+                    <a href="index.html#contact">Contact</a>
+                </nav>
+                <p class="footer-copy">&copy; 2026 Allen Lu. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="background-canvas.js"></script>
     <script src="gallery.js"></script>
 </body>
 

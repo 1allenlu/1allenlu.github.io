@@ -1,5 +1,10 @@
 /* Design tokens live in tokens.css, linked before this file. */
 
+:root {
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --bento-gap: 1rem;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -8,6 +13,18 @@
 
 html {
     scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+}
+
+.site-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* lvh stays constant while mobile browser bars show and hide */
+    height: 100lvh;
+    pointer-events: none;
+    z-index: -1;
 }
 
 body {
@@ -27,15 +44,51 @@ body {
 
 a:focus-visible,
 button:focus-visible,
-.filmstrip-thumb:focus-visible,
-.image-container:focus-visible,
-.gallery-hero:focus-visible {
+.filmstrip-thumb:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 4px;
 }
 
-/* Header — identical behavior to the main site: transparent, then
+.image-container:focus-visible,
+.gallery-hero:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* Cursor-tracking glow, matching the homepage cards */
+.glow-card::before,
+.glow-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 3;
+    transition: opacity var(--dur-fast) var(--ease);
+}
+
+.glow-card::before {
+    padding: 1px;
+    background: radial-gradient(280px circle at var(--glow-x, 50%) var(--glow-y, 50%), var(--accent), transparent 70%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+
+.glow-card::after {
+    background: radial-gradient(420px circle at var(--glow-x, 50%) var(--glow-y, 50%), var(--accent-tint), transparent 65%);
+}
+
+@media (hover: hover) {
+    .glow-card:hover::before,
+    .glow-card:hover::after {
+        opacity: 1;
+    }
+}
+
+/* Header: identical behavior to the main site: transparent, then
    translucent + blurred once scrolled */
 header {
     position: fixed;
@@ -130,6 +183,7 @@ nav {
     color: var(--text-secondary);
     font-weight: 400;
     font-size: 0.82rem;
+    letter-spacing: -0.005em;
     transition: color var(--dur-fast) var(--ease);
 }
 
@@ -138,20 +192,23 @@ nav {
     color: var(--text);
 }
 
-/* Gallery Hero — full-bleed, doubles as the featured photo. A dark scrim
-   sits under the headline whether or not the photo has loaded yet, so the
-   translucent white-text nav (see body.gallery-page below) always reads. */
+/* Gallery Hero: a rounded tile like the homepage hero, doubling as the
+   featured photo. The scrim keeps the headline readable over any photo. */
+.gallery-intro {
+    padding: 5.5rem 0 var(--bento-gap);
+}
+
 .gallery-hero {
     position: relative;
-    min-height: 84vh;
+    min-height: 62vh;
     display: flex;
     align-items: flex-end;
-    justify-content: center;
     overflow: hidden;
-    padding: 3rem 0 4.5rem;
-    text-align: center;
+    padding: clamp(1.75rem, 5vw, 3.5rem);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-lg);
     cursor: pointer;
-    background: #0a0a0a;
+    background: #050505;
 }
 
 .gallery-hero-bg {
@@ -163,11 +220,16 @@ nav {
     opacity: 0;
     transform: scale(1.03);
     transition: opacity 900ms var(--ease);
+    will-change: transform;
 }
 
 .gallery-hero-bg.loaded {
     opacity: 1;
     animation: heroKenBurns 26s ease-in-out infinite alternate;
+}
+
+.gallery-hero-bg.paused {
+    animation-play-state: paused;
 }
 
 /* A slow, perpetual drift on the hero photo, the way Apple's own hero
@@ -190,24 +252,22 @@ nav {
 }
 
 .gallery-hero h1 {
-    font-size: clamp(2.5rem, 5vw, 3.75rem);
+    font-size: clamp(3rem, 7vw, 5.25rem);
+    line-height: 1.05;
     margin-bottom: 0.6rem;
     color: #ffffff;
     font-weight: 600;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     opacity: 0;
-    animation: fadeInUp var(--dur-slow) var(--ease) 0.1s both;
+    animation: fadeInUp var(--dur-slow) var(--ease-out) 0.1s both;
 }
 
 .gallery-hero p {
     font-size: 1.15rem;
     color: rgba(255, 255, 255, 0.82);
-    margin-bottom: 1.75rem;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 1.5rem;
     opacity: 0;
-    animation: fadeInUp var(--dur-slow) var(--ease) 0.25s both;
+    animation: fadeInUp var(--dur-slow) var(--ease-out) 0.25s both;
 }
 
 @keyframes fadeInUp {
@@ -218,49 +278,23 @@ nav {
 /* Stats strip */
 .gallery-stats {
     display: flex;
-    gap: 0.8rem;
-    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.8rem;
     align-items: center;
     color: rgba(255, 255, 255, 0.75);
     font-size: 0.85rem;
     font-family: var(--font-mono);
     opacity: 0;
-    animation: fadeInUp var(--dur-slow) var(--ease) 0.4s both;
+    animation: fadeInUp var(--dur-slow) var(--ease-out) 0.4s both;
 }
 
 .stat-dot {
     color: var(--accent);
 }
 
-/* Nav rides transparent over the hero photo with light text, then flips to
-   the standard translucent/blurred + dark-text treatment once scrolled */
-body.gallery-page header:not(.scrolled) .logo,
-body.gallery-page header:not(.scrolled) .nav-links a {
-    color: rgba(255, 255, 255, 0.85);
-}
-
-body.gallery-page header:not(.scrolled) .nav-links a.nav-active,
-body.gallery-page header:not(.scrolled) .nav-links a:hover {
-    color: #ffffff;
-}
-
-body.gallery-page header:not(.scrolled) .mobile-menu-toggle span {
-    background: #ffffff;
-}
-
-body.gallery-page header:not(.scrolled) .theme-toggle {
-    color: rgba(255, 255, 255, 0.85);
-}
-
-body.gallery-page header:not(.scrolled) .theme-toggle:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.15);
-}
-
 /* Gallery Section */
 .gallery-section {
-    padding: 6rem 0;
-    background: var(--bg);
+    padding: 0 0 6rem;
 }
 
 /* Loading Indicator */
@@ -288,10 +322,10 @@ body.gallery-page header:not(.scrolled) .theme-toggle:hover {
     to { transform: rotate(360deg); }
 }
 
-/* Gallery Grid — Masonry via CSS columns */
+/* Gallery Grid: Masonry via CSS columns */
 .gallery-grid {
     columns: 3;
-    column-gap: 1.25rem;
+    column-gap: var(--bento-gap);
     opacity: 0;
     transition: opacity var(--dur-med) var(--ease);
 }
@@ -303,10 +337,10 @@ body.gallery-page header:not(.scrolled) .theme-toggle:hover {
 /* Gallery Items */
 .gallery-item {
     break-inside: avoid;
-    margin-bottom: 1.25rem;
+    margin-bottom: var(--bento-gap);
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+    transform: translateY(20px);
+    transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
 }
 
 .gallery-item.visible {
@@ -316,67 +350,39 @@ body.gallery-page header:not(.scrolled) .theme-toggle:hover {
 
 .image-container {
     position: relative;
-    border-radius: var(--radius-md);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-lg);
     overflow: hidden;
     cursor: pointer;
-    /* --py is a gentle scroll-linked drift set by JS; the transition here is
-       what turns it into a smooth trailing parallax instead of a jitter */
-    transform: translateY(var(--py, 0px));
-    transition: transform 600ms var(--ease), box-shadow var(--dur-med) var(--ease);
+    transition: transform 400ms var(--ease-out), box-shadow 400ms var(--ease-out);
     background: var(--surface);
     display: block;
-    will-change: transform;
 }
 
-.image-container:hover {
-    transform: translateY(var(--py, 0px)) scale(1.015);
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.14);
+@media (hover: hover) {
+    .image-container:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.14);
+        z-index: 2;
+    }
 }
 
-/* Shimmer loading placeholder */
+/* Holds the photo's exact shape from the start (aspect-ratio set in gallery.js),
+   so nothing shifts or changes column when it loads */
 .image-placeholder {
     width: 100%;
-    height: 260px;
-    background: linear-gradient(90deg, var(--surface) 25%, var(--divider) 50%, var(--surface) 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-}
-
-@keyframes shimmer {
-    0%   { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-}
-
-.image-placeholder.loaded {
-    height: auto;
-    background: none;
-    animation: none;
+    background: var(--surface);
 }
 
 .image-placeholder img {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
-    transition: opacity var(--dur-med) var(--ease), transform var(--dur-med) var(--ease);
+    object-fit: cover;
+    transition: opacity var(--dur-med) var(--ease-out);
 }
 
-.image-container:hover .image-placeholder img {
-    transform: scale(1.03);
-}
-
-.placeholder-content {
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    font-weight: 500;
-    position: absolute;
-}
-
-/* Caption tag — a small always-visible label per photo (like iOS Photos'
+/* Caption tag: a small always-visible label per photo (like iOS Photos'
    location tags on thumbnails), not something that only appears on hover */
 .image-caption {
     position: absolute;
@@ -385,9 +391,7 @@ body.gallery-page header:not(.scrolled) .theme-toggle:hover {
     max-width: calc(100% - 1.5rem);
     padding: 0.35rem 0.8rem;
     border-radius: 999px;
-    background: rgba(0, 0, 0, 0.55);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, 0.62);
     color: #ffffff;
     font-size: 0.78rem;
     font-weight: 500;
@@ -440,14 +444,12 @@ body.gallery-page header:not(.scrolled) .theme-toggle:hover {
     object-fit: contain;
     border-radius: var(--radius-sm);
     transform: scale(1);
-    filter: blur(0);
-    transition: opacity 320ms var(--ease), transform 320ms var(--ease), filter 320ms var(--ease);
+    transition: opacity 240ms var(--ease-out), transform 240ms var(--ease-out);
 }
 
 .lightbox-image.fading {
     opacity: 0;
-    transform: scale(0.97);
-    filter: blur(8px);
+    transform: scale(0.985);
 }
 
 .lightbox-close {
@@ -690,6 +692,56 @@ body.gallery-page header:not(.scrolled) .theme-toggle:hover {
     transform: rotate(-45deg) translate(5px, -5px);
 }
 
+footer {
+    background: var(--bg-alt);
+    color: var(--text-secondary);
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--divider);
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.footer-logo {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    transition: opacity var(--dur-fast) var(--ease);
+}
+
+.footer-logo:hover {
+    opacity: 0.7;
+}
+
+.footer-nav {
+    display: flex;
+    gap: 1.75rem;
+    flex-wrap: wrap;
+}
+
+.footer-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color var(--dur-fast) var(--ease);
+}
+
+.footer-nav a:hover {
+    color: var(--text);
+}
+
+.footer-copy {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
 /* Responsive Design */
 @media (max-width: 900px) {
     .gallery-grid {
@@ -699,16 +751,7 @@ body.gallery-page header:not(.scrolled) .theme-toggle:hover {
 
 @media (max-width: 768px) {
     .gallery-hero {
-        min-height: 60vh;
-    }
-
-    .gallery-grid {
-        columns: 2;
-        column-gap: 1rem;
-    }
-
-    .gallery-item {
-        margin-bottom: 1rem;
+        min-height: 56vh;
     }
 
     .nav-links {
@@ -749,10 +792,6 @@ body.gallery-page header:not(.scrolled) .theme-toggle:hover {
 @media (max-width: 480px) {
     .gallery-grid {
         columns: 1;
-    }
-
-    .image-placeholder {
-        height: 220px;
     }
 
     .lightbox-nav {
@@ -801,11 +840,9 @@ body.gallery-page header:not(.scrolled) .theme-toggle:hover {
 
     .lightbox-image.fading {
         transform: none;
-        filter: none;
     }
 
-    .loading-spinner,
-    .image-placeholder {
+    .loading-spinner {
         animation: none;
     }
 }
